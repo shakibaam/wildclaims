@@ -1,0 +1,8 @@
+Classify the extracted claim <sentence> from the conversation between a human and a language model into one of the following categories:
+- NFS: Non-Factual Sentence
+- UFS: Unimportant Factual Sentence
+- CFS: Check-worthy Factual Sentence
+
+Respond with only one label: NFS, UFS, or CFS. Do not provide any explanation.
+Here is the conversation history for context:
+{Conversation_History}

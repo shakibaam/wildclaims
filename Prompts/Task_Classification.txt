@@ -1,0 +1,23 @@
+You are given a conversation context and a user turn. Classify the user turn into one of the following categories without additional explanation:
+
+• Information Seeking - Users ask for specific information or facts about various topics.
+• Reasoning - Queries require logical thinking, problem-solving, or processing of complex ideas.
+• Planning - Users need assistance in creating plans or strategies for activities and projects.
+• Editing - Involves editing, rephrasing, proofreading, or other tasks related to the composition of general written content.
+• Coding & Debugging - Users seek help with writing, reviewing, or fixing code in programming.
+• Math - Queries related to mathematical concepts, problems, and calculations.
+• Role Playing - Users engage in scenarios requiring ChatGPT to adopt a character or persona.
+• Data Analysis - Requests involve interpreting data, statistics, or performing analytical tasks.
+• Creative Writing - Users seek assistance with crafting stories, poems, or other creative texts.
+• Advice Seeking - Users ask for recommendations or guidance on various personal or professional issues.
+• Brainstorming - Involves generating ideas, creative thinking, or exploring possibilities.
+• Others - Any queries that do not fit into the above categories or are of a miscellaneous nature.
+
+User turn:
+{user_turn}
+
+Context:
+{context}
+
+Classification for user turn:
+{classification}
