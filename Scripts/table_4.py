@@ -14,7 +14,7 @@ def calculate_kappa(observed_agreement, expected_agreement):
     return (observed_agreement - expected_agreement) / (1 - expected_agreement)
 
 def main():
-    csv_file_path = 'Annotations/Human_Annotation_200 .csv'
+    csv_file_path = 'Annotations/Human_Annotation_200.csv'
     
     print("Loading data from Human_Annotation_200.csv...")
     
@@ -43,6 +43,7 @@ def main():
             human1_cw = row['Human1_CW']
             human2_cw = row['Human2_CW']
             gold = row['Gold']
+            
             
             # Update counters for this claim method
             claim_methods[claim_method]['total_rows'] += 1
@@ -110,7 +111,7 @@ def main():
             # Calculate Kappa
             kappa = calculate_kappa(observed_agreement, expected_agreement)
             
-            print(f"4. Kappa score between Human1_CW and Gold: {kappa:.4f}")
+            # print(f"4. Kappa score between Human1_CW and Gold: {kappa:.4f}")
             # print(f"   - Observed agreement: {observed_agreement:.4f}")
             # print(f"   - Expected agreement: {expected_agreement:.4f}")
             # print(f"   - Agreement breakdown:")
@@ -121,38 +122,64 @@ def main():
         else:
             print("4. Kappa score: Cannot calculate (no data)")
         
+        # Calculate Kappa score between Human1_CW and Human2_CW
+        if len(data['human1_cw_values']) > 0 and len(data['human2_cw_values']) > 0:
+            # Count agreements and disagreements
+            both_true = sum(1 for human1, human2 in zip(data['human1_cw_values'], data['human2_cw_values']) if human1 and human2)
+            both_false = sum(1 for human1, human2 in zip(data['human1_cw_values'], data['human2_cw_values']) if not human1 and not human2)
+            human1_true_human2_false = sum(1 for human1, human2 in zip(data['human1_cw_values'], data['human2_cw_values']) if human1 and not human2)
+            human1_false_human2_true = sum(1 for human1, human2 in zip(data['human1_cw_values'], data['human2_cw_values']) if not human1 and human2)
+            
+            # Observed agreement
+            observed_agreement = (both_true + both_false) / data['total_rows']
+            
+            # Expected agreement (chance agreement)
+            human1_true_rate = data['human1_cw_true'] / data['total_rows']
+            human1_false_rate = 1 - human1_true_rate
+            human2_true_rate = data['human2_cw_true'] / data['total_rows']
+            human2_false_rate = 1 - human2_true_rate
+            
+            expected_agreement = (human1_true_rate * human2_true_rate) + (human1_false_rate * human2_false_rate)
+            
+            # Calculate Kappa
+            kappa_h1_h2 = calculate_kappa(observed_agreement, expected_agreement)
+            
+            print(f"5. Kappa score between Human1_CW and Human2_CW: {kappa_h1_h2:.4f}")
+        else:
+            print("5. Kappa score: Cannot calculate (no data)")
+        
         print()
     
     # Overall statistics across all methods
-    print("=== Overall Statistics ===")
-    total_human1_cw_true = sum(data['human1_cw_true'] for data in claim_methods.values())
-    total_human2_cw_true = sum(data['human2_cw_true'] for data in claim_methods.values())
-    total_gold_true = sum(data['gold_true'] for data in claim_methods.values())
+    # print("=== Overall Statistics ===")
+    # total_human1_cw_true = sum(data['human1_cw_true'] for data in claim_methods.values())
+    # total_human2_cw_true = sum(data['human2_cw_true'] for data in claim_methods.values())
+    # total_gold_true = sum(data['gold_true'] for data in claim_methods.values())
     
-    overall_human1_cw_pct = (total_human1_cw_true / total_rows) * 100 if total_rows > 0 else 0
-    overall_human2_cw_pct = (total_human2_cw_true / total_rows) * 100 if total_rows > 0 else 0
-    overall_gold_pct = (total_gold_true / total_rows) * 100 if total_rows > 0 else 0
+    # overall_human1_cw_pct = (total_human1_cw_true / total_rows) * 100 if total_rows > 0 else 0
+    # overall_human2_cw_pct = (total_human2_cw_true / total_rows) * 100 if total_rows > 0 else 0
+    # overall_gold_pct = (total_gold_true / total_rows) * 100 if total_rows > 0 else 0
     
-    print(f"Overall percentage of True for Human1_CW: {overall_human1_cw_pct:.2f}% ({total_human1_cw_true}/{total_rows})")
-    print(f"Overall percentage of True for Human2_CW: {overall_human2_cw_pct:.2f}% ({total_human2_cw_true}/{total_rows})")
-    print(f"Overall percentage of True for Gold: {overall_gold_pct:.2f}% ({total_gold_true}/{total_rows})")
+    # print(f"Overall percentage of True for Human1_CW: {overall_human1_cw_pct:.2f}% ({total_human1_cw_true}/{total_rows})")
+    # print(f"Overall percentage of True for Human2_CW: {overall_human2_cw_pct:.2f}% ({total_human2_cw_true}/{total_rows})")
+    # print(f"Overall percentage of True for Gold: {overall_gold_pct:.2f}% ({total_gold_true}/{total_rows})")
     
-    # Overall Kappa calculation between Human1_CW and Gold
-    all_human1_cw_values = []
-    all_gold_values = []
-    for data in claim_methods.values():
-        all_human1_cw_values.extend(data['human1_cw_values'])
-        all_gold_values.extend(data['gold_values'])
+    # # Overall Kappa calculation between Human1_CW and Gold
+    # all_human1_cw_values = []
+    # all_gold_values = []
+    # for data in claim_methods.values():
+    #     all_human1_cw_values.extend(data['human1_cw_values'])
+    #     all_gold_values.extend(data['gold_values'])
     
-    if len(all_human1_cw_values) > 0 and len(all_gold_values) > 0:
-        both_true = sum(1 for human1, gold in zip(all_human1_cw_values, all_gold_values) if human1 and gold)
-        both_false = sum(1 for human1, gold in zip(all_human1_cw_values, all_gold_values) if not human1 and not gold)
+    # if len(all_human1_cw_values) > 0 and len(all_gold_values) > 0:
+    #     both_true = sum(1 for human1, gold in zip(all_human1_cw_values, all_gold_values) if human1 and gold)
+    #     both_false = sum(1 for human1, gold in zip(all_human1_cw_values, all_gold_values) if not human1 and not gold)
         
-        observed_agreement = (both_true + both_false) / total_rows
-        expected_agreement = (overall_human1_cw_pct/100 * overall_gold_pct/100) + ((100-overall_human1_cw_pct)/100 * (100-overall_gold_pct)/100)
+    #     observed_agreement = (both_true + both_false) / total_rows
+    #     expected_agreement = (overall_human1_cw_pct/100 * overall_gold_pct/100) + ((100-overall_human1_cw_pct)/100 * (100-overall_gold_pct)/100)
         
-        overall_kappa = calculate_kappa(observed_agreement, expected_agreement)
-        print(f"Overall Kappa score between Human1_CW and Gold: {overall_kappa:.4f}")
+    #     overall_kappa = calculate_kappa(observed_agreement, expected_agreement)
+    #     print(f"Overall Kappa score between Human1_CW and Gold: {overall_kappa:.4f}")
 
 if __name__ == "__main__":
     main()

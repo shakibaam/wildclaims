@@ -21,7 +21,7 @@ def calculate_precision_recall_f1(true_positives, false_positives, false_negativ
     return precision, recall, f1
 
 def main():
-    csv_file_path = 'Annotations/Human_Annotation_200 .csv'
+    csv_file_path = 'Annotations/Human_Annotation_200.csv'
     
     print("Loading data from Human_Annotation_200.csv...")
     
@@ -29,8 +29,8 @@ def main():
     claim_methods = defaultdict(lambda: {
         'total_rows': 0,
         'gold_values': [],
-        'major_24_binary_values': [],
-        'hassan_15_binary_values': [],
+        'hassan_binary_values': [],
+        'major_binary_values': [],
         'intersection_values': [],
         'union_values': []
     })
@@ -47,25 +47,31 @@ def main():
             # Extract data
             claim_method = row['claim_extr_method']
             gold = row['Gold']
-            major_24_binary = row['major_24_binary']
-            hassan_15_binary = row['hassan_15_binary']
+            major_binary = row['major_binary']
+            hassan_binary = row['hassan_binary']
             intersection = row['Intersection']
             union = row['Union']
+            
+            # Replace siqing with FHou and veriscore with FSong in claim_extr_method
+            # if claim_method == 'siqing':
+            #     claim_method = 'FHou'
+            # elif claim_method == 'veriscore':
+            #     claim_method = 'FSong'
             
             # Update counters for this claim method
             claim_methods[claim_method]['total_rows'] += 1
             
             # Convert to boolean values (case-insensitive)
             gold_is_true = gold.upper() == 'TRUE'
-            major_24_is_true = major_24_binary.upper() == 'TRUE'
-            hassan_15_is_true = hassan_15_binary.upper() == 'TRUE'
+            major_is_true = major_binary.upper() == 'TRUE'
+            hassan_is_true = hassan_binary.upper() == 'TRUE'
             intersection_is_true = intersection.upper() == 'TRUE'
             union_is_true = union.upper() == 'TRUE'
             
             # Store values
             claim_methods[claim_method]['gold_values'].append(gold_is_true)
-            claim_methods[claim_method]['major_24_binary_values'].append(major_24_is_true)
-            claim_methods[claim_method]['hassan_15_binary_values'].append(hassan_15_is_true)
+            claim_methods[claim_method]['major_binary_values'].append(major_is_true)
+            claim_methods[claim_method]['hassan_binary_values'].append(hassan_is_true)
             claim_methods[claim_method]['intersection_values'].append(intersection_is_true)
             claim_methods[claim_method]['union_values'].append(union_is_true)
     
@@ -81,8 +87,8 @@ def main():
         
         # Define the columns to analyze
         columns_to_analyze = [
-            ('major_24_binary', data['major_24_binary_values']),
-            ('hassan_15_binary', data['hassan_15_binary_values']),
+            ('hassan_binary', data['hassan_binary_values']),
+            ('major_binary', data['major_binary_values']),
             ('Intersection', data['intersection_values']),
             ('Union', data['union_values'])
         ]
