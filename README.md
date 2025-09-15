@@ -11,7 +11,7 @@ This repository contains annotations and analysis scripts for the Information Ac
 ## Annotation Files
 
 ### `Annotations/3k_Results.csv`
-Main dataset with 7,587 rows across 3,000 conversations containing:
+Main dataset across 3,000 conversations containing:
 
 **Basic Information:**
 - `conversation_hash`: Unique identifier for each conversation
@@ -52,7 +52,7 @@ Human annotation data with 200 rows for inter-annotator agreement analysis conta
 - `Human1_CW`: First annotator's check-worthiness decision (TRUE/FALSE)
 - `Human2_CW`: Second annotator's check-worthiness decision (TRUE/FALSE)
 - `Human1_Human2_Agree`: Whether both annotators agree (TRUE/FALSE)
-- `check worthy? (tie-breaking) (Charlie)`: Tie-breaking annotation
+- `check worthy? (tie-breaking)`: Tie-breaking annotation
 - `CW_Tie`: Tie-breaking check-worthiness decision
 
 **Automatic Classifications:**
