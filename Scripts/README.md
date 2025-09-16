@@ -27,7 +27,7 @@ pip install -r requirements.txt
 
 ### `Statistics_Fact_Claim_Extraction_3k.py`
 
-**Purpose**: Computes statistics about factual claim extraction comparing FHou and FSong extraction methods.
+**Purpose**: Computes statistics about factual claim extraction comparing FHuo and FSong extraction methods.
 
 **Input**: `Annotations/run_analysis.csv` (utterance-level annotations with claim arrays)
 
@@ -54,9 +54,9 @@ pip install -r requirements.txt
 **Input**: `Annotations/Human_Annotation.csv` (200 annotated claims)
 
 **Output**: Console output with effectiveness metrics including:
-- Precision, Recall, F1-score for each classifier (Hassan, Major, Intersection, Union)
+- Precision, Recall, F1-score for each classifier (Hassan, Majer, Intersection, Union)
 - Cohen's κ agreement scores between automatic methods and gold standard
-- Separate analyses for FHou and FSong extraction methods
+- Separate analyses for FHuo and FSong extraction methods
 
 ### `Prevalence_Check_Worthy_3k.py`
 
@@ -68,7 +68,7 @@ pip install -r requirements.txt
 - Percentage of check-worthy claims among all extracted claims
 - Percentage of utterances with ≥1 check-worthy claim
 - Percentage of conversations with ≥1 check-worthy claim
-- Results for all method combinations (FHou/FSong × Hassan/Major/Intersection/Union)
+- Results for all method combinations (FHuo/FSong × Hassan/Majer/Intersection/Union)
 
 ## Usage
 
