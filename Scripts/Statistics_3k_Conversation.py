@@ -31,11 +31,11 @@ def main():
             total_rows += 1
             
             # Extract data
-            conversation_hash = row['conversation_hash']
-            turn_num = row['turn_num']
+            conversation_hash = row['Conversation_Hash']
+            turn_num = row['Turn_Num']
             user_question = row['Corresponding_User_Question']
             agent_utterance = row['Selected_Agent_Utterance']
-            task_classification = row['task_classification']
+            task_classification = row['Task_Classification']
             
             # Convert turn_num to int, handling any non-numeric values
             try:

@@ -33,7 +33,7 @@ def main():
     # Initialize data structures
     FHuo_hassan_arrays = []
     FSong_hassan_arrays = []
-    conversation_data = defaultdict(lambda: {'FHuo_hassan': [], 'FSong_hassan': []})
+    conversation_data = defaultdict(lambda: {'FHuo_Hassan': [], 'FSong_Hassan': []})
     total_rows = 0
     
     # Read the CSV file
@@ -44,9 +44,9 @@ def main():
             total_rows += 1
             
             # Extract data
-            conversation_hash = row['conversation_hash']
-            FHuo_hassan_str = row['FHuo_hassan']
-            FSong_hassan_str = row['FSong_hassan']
+            conversation_hash = row['Conversation_Hash']
+            FHuo_hassan_str = row['FHuo_Hassan']
+            FSong_hassan_str = row['FSong_Hassan']
             
             # Parse arrays
             FHuo_hassan_array = parse_array_string(FHuo_hassan_str)
@@ -57,8 +57,8 @@ def main():
             FSong_hassan_arrays.append(FSong_hassan_array)
             
             # Store by conversation
-            conversation_data[conversation_hash]['FHuo_hassan'].append(FHuo_hassan_array)
-            conversation_data[conversation_hash]['FSong_hassan'].append(FSong_hassan_array)
+            conversation_data[conversation_hash]['FHuo_Hassan'].append(FHuo_hassan_array)
+            conversation_data[conversation_hash]['FSong_Hassan'].append(FSong_hassan_array)
     
     print(f"Total rows in dataset: {total_rows}")
     print()
@@ -84,7 +84,7 @@ def main():
     # 5. Average number of elements in FHou_hassan arrays per conversation
     FHuo_elements_per_conversation = []
     for conv_hash, data in conversation_data.items():
-        total_elements = sum(len(arr) for arr in data['FHuo_hassan'])
+        total_elements = sum(len(arr) for arr in data['FHuo_Hassan'])
         FHuo_elements_per_conversation.append(total_elements)
     
     avg_FHuo_elements_per_conversation = sum(FHuo_elements_per_conversation) / len(FHuo_elements_per_conversation) if FHuo_elements_per_conversation else 0
@@ -93,7 +93,7 @@ def main():
     # 6. Average number of elements in FSong_hassan arrays per conversation
     FSong_elements_per_conversation = []
     for conv_hash, data in conversation_data.items():
-        total_elements = sum(len(arr) for arr in data['FSong_hassan'])
+        total_elements = sum(len(arr) for arr in data['FSong_Hassan'])
         FSong_elements_per_conversation.append(total_elements)
     
     avg_FSong_elements_per_conversation = sum(FSong_elements_per_conversation) / len(FSong_elements_per_conversation) if FSong_elements_per_conversation else 0
@@ -119,7 +119,7 @@ def main():
     
     for conv_hash, data in conversation_data.items():
         # Check if any turn in this conversation has non-empty FHou_hassan array
-        has_non_empty_FHuo = any(len(arr) > 0 for arr in data['FHuo_hassan'])
+        has_non_empty_FHuo = any(len(arr) > 0 for arr in data['FHuo_Hassan'])
         if has_non_empty_FHuo:
             conversations_with_FHuo_hassan += 1
     
@@ -132,7 +132,7 @@ def main():
     
     for conv_hash, data in conversation_data.items():
         # Check if any turn in this conversation has non-empty FSong_hassan array
-        has_non_empty_FSong = any(len(arr) > 0 for arr in data['FSong_hassan'])
+        has_non_empty_FSong = any(len(arr) > 0 for arr in data['FSong_Hassan'])
         if has_non_empty_FSong:
             conversations_with_FSong_hassan += 1
     

@@ -16,7 +16,7 @@ def calculate_kappa(observed_agreement, expected_agreement):
 def main():
     csv_file_path = '../Annotations/Human_Annotation.csv'
     
-    print("Loading data from Human_Annotation_200.csv...")
+    print("Loading data from Human_Annotation.csv...")
     
     # Initialize data structures
     claim_methods = defaultdict(lambda: {
@@ -39,7 +39,7 @@ def main():
             total_rows += 1
             
             # Extract data
-            claim_method = row['claim_extr_method']
+            claim_method = row['Claim_Extr_Method']
             human1_cw = row['Human1_CW']
             human2_cw = row['Human2_CW']
             gold = row['Gold']

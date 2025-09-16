@@ -1,4 +1,4 @@
-# Information Access Conversations in the Wild(Chat) — Scripts & Annotations
+# Information Access Conversations in the Wild(Chat)
 
 This repository provides the **annotations, prompts, and analysis scripts** used in the paper *“Information Access Conversations in the Wild(Chat)”*.  
 It is intended as a resource to help researchers **reproduce the reported results**, explore the annotated datasets, and extend the analyses.  

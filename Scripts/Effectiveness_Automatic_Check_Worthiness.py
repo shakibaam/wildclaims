@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 """
 Script to compute precision, recall, F1, and kappa for binary columns in relation to Gold standard.
 """
@@ -29,8 +29,8 @@ def main():
     claim_methods = defaultdict(lambda: {
         'total_rows': 0,
         'gold_values': [],
-        'hassan_binary_values': [],
-        'majer_binary_values': [],
+        'Hassan_Binary_values': [],
+        'Majer_Binary_values': [],
         'intersection_values': [],
         'union_values': []
     })
@@ -45,10 +45,10 @@ def main():
             total_rows += 1
             
             # Extract data
-            claim_method = row['claim_extr_method']
+            claim_method = row['Claim_Extr_Method']
             gold = row['Gold']
-            majer_binary = row['majer_binary']
-            hassan_binary = row['hassan_binary']
+            majer_binary = row['Majer_Binary']
+            hassan_binary = row['Hassan_Binary']
             intersection = row['Intersection']
             union = row['Union']
             
@@ -70,8 +70,8 @@ def main():
             
             # Store values
             claim_methods[claim_method]['gold_values'].append(gold_is_true)
-            claim_methods[claim_method]['majer_binary_values'].append(majer_is_true)
-            claim_methods[claim_method]['hassan_binary_values'].append(hassan_is_true)
+            claim_methods[claim_method]['Majer_Binary_values'].append(majer_is_true)
+            claim_methods[claim_method]['Hassan_Binary_values'].append(hassan_is_true)
             claim_methods[claim_method]['intersection_values'].append(intersection_is_true)
             claim_methods[claim_method]['union_values'].append(union_is_true)
     
@@ -87,8 +87,8 @@ def main():
         
         # Define the columns to analyze
         columns_to_analyze = [
-            ('hassan_binary', data['hassan_binary_values']),
-            ('majer_binary', data['majer_binary_values']),
+            ('Hassan_Binary', data['Hassan_Binary_values']),
+            ('Majer_Binary', data['Majer_Binary_values']),
             ('Intersection', data['intersection_values']),
             ('Union', data['union_values'])
         ]

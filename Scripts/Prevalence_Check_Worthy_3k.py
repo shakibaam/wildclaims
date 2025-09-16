@@ -35,14 +35,14 @@ def main():
     
     # Define columns to analyze in the requested order
     columns_to_analyze = [
-        'FHuo_hassan',
-        'FHuo_majer',
-        'FHuo_intersection',
-        'FHuo_union',
-        'FSong_hassan',
-        'FSong_majer',
-        'FSong_intersection',
-        'FSong_union'
+        'FHuo_Hassan',
+        'FHuo_Majer',
+        'FHuo_Intersection',
+        'FHuo_Union',
+        'FSong_Hassan',
+        'FSong_Majer',
+        'FSong_Intersection',
+        'FSong_Union'
     ]
     
     # Initialize data structures
@@ -60,7 +60,7 @@ def main():
             total_rows += 1
             
             # Extract data
-            conversation_hash = row['conversation_hash']
+            conversation_hash = row['Conversation_Hash']
             selected_agent_column = row['Selected_Agent_Column']
             
             # Parse arrays for each column
