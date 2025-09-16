@@ -1,9 +1,28 @@
 # Information Access Conversations in the Wild(Chat) — Scripts & Annotations
 
 This repository provides the **annotations, prompts, and analysis scripts** used in the paper *“Information Access Conversations in the Wild(Chat)”*.  
-It is intended as a companion resource to help researchers **reproduce the reported results**, explore the annotated datasets, and extend the analyses.  
+It is intended as a resource to help researchers **reproduce the reported results**, explore the annotated datasets, and extend the analyses.  
 
 Each script corresponds to a section of the paper and generates specific statistics or evaluation metrics directly from the released annotations.
+
+## Methods Overview
+
+This repository builds on prior work in **claim extraction** and **check-worthiness detection**.  
+We use the following methods, as described in the paper:
+
+- **FHuo (Huo et al. 2023)** — Extracts factual statements from system utterances by prompting an LLM directly. 
+  [[Paper link]](https://dl.acm.org/doi/fullHtml/10.1145/3624918.3625336/)  
+
+- **FSong (Song et al. 2024)** — Extracts only *verifiable* factual claims. Produces broader coverage, yielding nearly 3× more claims than FHuo.  
+  [[Paper link]](https://aclanthology.org/2024.findings-emnlp.552//)  
+
+- **Hassan (Hassan et al. 2015)** — one of the earliest check-worthiness detection approaches, originally based on crowd annotation guidelines. In our work, we adapted it into an LLM prompt to classify claims as check-worthy or not.  
+  [[Paper link]](https://dl.acm.org/doi/10.1145/2806416.2806652)  
+
+- **Majer (Majer & Šnajder 2024)** — A recent check-worthiness detection method, using an effective LLM prompt designed to identify both factual and check-worthy factual claims.  
+  [[Paper link]](https://aclanthology.org/2024.fever-1.27//)  
+
+These methods are combined in different ways (e.g., intersection, union) to estimate the prevalence of check-worthy claims and to evaluate classifier effectiveness (See Section 4.1 of the paper).
 
 
 
