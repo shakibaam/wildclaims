@@ -1,0 +1,10 @@
+# Python dependencies for Wildchat Paper analysis scripts
+# 
+# All scripts use only Python standard library modules:
+# - csv (for reading CSV files)
+# - collections (for defaultdict, Counter)
+# - math (for mathematical operations)
+#
+# No external dependencies required for Python 3.x
+# If you need specific versions, uncomment and modify below:
+# python>=3.6

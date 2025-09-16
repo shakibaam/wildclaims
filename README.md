@@ -197,14 +197,11 @@ For each method combination
 
 ## Usage
 
-Each script can be run independently to reproduce the analyses reported in the paper.  
-Run them from the repository root as follows:
+For detailed instructions on running the analysis scripts, please see the [Scripts README](Scripts/README.md).
+
+Each script can be run independently to reproduce the analyses reported in the paper. Make sure to install any required dependencies by running:
 
 ```bash
-python3 Scripts/Effectiveness_Automatic_Check_Worthiness.py
-python3 Scripts/Prevalence_Check_Worthy_3k.py
-python3 Scripts/Statistics_3k_Conversation.py
-python3 Scripts/Statistics_Fact_Claim_Extraction_3k.py
-python3 Scripts/Statistics_Human_Annotations.py
-
+pip install -r requirements.txt
+```
 
