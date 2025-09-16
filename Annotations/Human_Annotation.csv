@@ -1,6 +1,6 @@
 claim_extr_method,ver,conversation_hash,Individual_Statement,Human1_Annotation,Human2_Annotation,Human1_CW,Human2_CW,Human1_Human2_Agree,"check worthy?
 (tie-breaking)
-",CW_Tie,major,hassan,major_binary,hassan_binary,Gold,Intersection,Union,Task_Classification
+",CW_Tie,majer,hassan,majer_binary,hassan_binary,Gold,Intersection,Union,Task_Classification
 siqing,v2,e16eff87984b2fe9b1bd4e9f680cb8bb,"After being helped by Amatsu, Ayumi rejoined her companions.",NFS,NFS,FALSE,FALSE,TRUE,NA,NA,UFS,UFS,FALSE,FALSE,FALSE,FALSE,FALSE,Creative Writing
 siqing,v2,059a5fe47ecb9af1a63af0ac9e92c22e,There is an error related to upstream connectivity in the nginx server.,NFS,UFS,FALSE,FALSE,TRUE,NA,NA,UFS,CFS,FALSE,TRUE,FALSE,FALSE,TRUE,Coding & Debugging
 siqing,v2,b5faed7a617ed9b71bb65de485712c2b,All cabinet positions must be approved by the Council in majority vote or by 60% of both the Senate and House.,CFS,CFS,TRUE,TRUE,TRUE,NA,NA,CFS,CFS,TRUE,TRUE,TRUE,TRUE,TRUE,Reasoning
