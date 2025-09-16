@@ -29,18 +29,18 @@ def parse_array_string(array_str):
         return []
 
 def main():
-    csv_file_path = 'Annotations/3k_Results.csv'
+    csv_file_path = '../Annotations/run_analysis.csv'
     
-    print("Loading data from 3k_Results.csv...")
+    print("Loading data from run_analysis.csv...")
     
     # Define columns to analyze in the requested order
     columns_to_analyze = [
-        'FHou_hassan',
-        'FHou_major',
-        'FHou_intersection',
-        'FHou_union',
+        'FHuo_hassan',
+        'FHuo_majer',
+        'FHuo_intersection',
+        'FHuo_union',
         'FSong_hassan',
-        'FSong_major',
+        'FSong_majer',
         'FSong_intersection',
         'FSong_union'
     ]

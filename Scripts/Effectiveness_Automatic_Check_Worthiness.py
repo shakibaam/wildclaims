@@ -21,16 +21,16 @@ def calculate_precision_recall_f1(true_positives, false_positives, false_negativ
     return precision, recall, f1
 
 def main():
-    csv_file_path = 'Annotations/Human_Annotation_200.csv'
+    csv_file_path = '../Annotations/Human_Annotation.csv'
     
-    print("Loading data from Human_Annotation_200.csv...")
+    print("Loading data from Human_Annotation.csv...")
     
     # Initialize data structures
     claim_methods = defaultdict(lambda: {
         'total_rows': 0,
         'gold_values': [],
         'hassan_binary_values': [],
-        'major_binary_values': [],
+        'majer_binary_values': [],
         'intersection_values': [],
         'union_values': []
     })
@@ -47,7 +47,7 @@ def main():
             # Extract data
             claim_method = row['claim_extr_method']
             gold = row['Gold']
-            major_binary = row['major_binary']
+            majer_binary = row['majer_binary']
             hassan_binary = row['hassan_binary']
             intersection = row['Intersection']
             union = row['Union']
@@ -63,14 +63,14 @@ def main():
             
             # Convert to boolean values (case-insensitive)
             gold_is_true = gold.upper() == 'TRUE'
-            major_is_true = major_binary.upper() == 'TRUE'
+            majer_is_true = majer_binary.upper() == 'TRUE'
             hassan_is_true = hassan_binary.upper() == 'TRUE'
             intersection_is_true = intersection.upper() == 'TRUE'
             union_is_true = union.upper() == 'TRUE'
             
             # Store values
             claim_methods[claim_method]['gold_values'].append(gold_is_true)
-            claim_methods[claim_method]['major_binary_values'].append(major_is_true)
+            claim_methods[claim_method]['majer_binary_values'].append(majer_is_true)
             claim_methods[claim_method]['hassan_binary_values'].append(hassan_is_true)
             claim_methods[claim_method]['intersection_values'].append(intersection_is_true)
             claim_methods[claim_method]['union_values'].append(union_is_true)
@@ -88,7 +88,7 @@ def main():
         # Define the columns to analyze
         columns_to_analyze = [
             ('hassan_binary', data['hassan_binary_values']),
-            ('major_binary', data['major_binary_values']),
+            ('majer_binary', data['majer_binary_values']),
             ('Intersection', data['intersection_values']),
             ('Union', data['union_values'])
         ]
