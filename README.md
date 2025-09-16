@@ -84,8 +84,8 @@ Each row corresponds to a **single claim** linked to its originating agent utter
 **Notes**
 - This file operates at the **claim level** (one row per claim), unlike `run_analysis.csv`, which is **utterance-level**.  
 - Totals:  
-  - **FHou** extraction: ~31,108 claims  
-  - **FSong** extraction: ~90,797 claims  
+    - **FHou** extraction: **~31,108** claims  
+    - **FSong** extraction: **~90,797** claims   
 - These counts align with the paper’s reported results and can be used to replicate extraction statistics.
 
 
