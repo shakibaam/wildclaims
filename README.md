@@ -24,6 +24,9 @@ We use the following methods, as described in the paper:
 
 These methods are combined in different ways (e.g., intersection, union) to estimate the prevalence of check-worthy claims and to evaluate classifier effectiveness (See Section 4.1 of the paper).
 
+## Statistics
+![Statistics](https://github.com/shakibaam/wildclaims/blob/main/Statistics.png?raw=true)
+
 
 ## Annotation Files
 
