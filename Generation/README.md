@@ -34,14 +34,15 @@ This script identifies and labels conversations in the WildChat dataset that are
 - `batch_results.jsonl` – batch API results (must be manually downloaded and placed).  
 - `labeled_output.csv` – final labeled dataset with one row per conversation and a `Label` column (`Math`, `Coding`, or `Others`).  
 
-**How to Run**  
+**How to Run**
 ```bash
 python labeling_math_and_code.py \
-  --input_csv path/to/input.csv \
-  --output_dir outputs/labeling_math_and_code \
-  --model_name gpt-4.1-mini-2025-04-14
+    --input_csv path/to/input.csv \
+    --output_dir outputs/labeling_math_and_code \
+    --model_name gpt-4.1-mini-2025-04-14
 
-### `Preprocess_Files_For_Pipeline.py`
+
+`Preprocess_Files_For_Pipeline.py`
 
 **Purpose**  
 This script runs the **preprocessing pipeline** to prepare system utterances (Agent/System) for downstream **claim extraction**.  
