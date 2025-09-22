@@ -1,4 +1,4 @@
-## WildClaims Repository  
+# WildClaims
 
 This is the repo for our paper: **WildClaims: Information Access Conversations in the Wild(Chat)**.  
 The repository contains:  
@@ -10,35 +10,15 @@ The repository contains:
 
 ## What is WildClaims?
 - **WildClaims** is a dataset designed to study **implicit information access** in real-world human-system conversations. It focuses on the phenomenon that we found, where users' access to the information often occurs implicitly through the form of check-worthy factual claims made by the system, even when the user's task is not explicitly informational (e.g., during creative writing).
-- Derived from the existing WildChat corpus, the dataset contains **121,905** factual claims extracted from 7,587 system utterances across 3,000 conversations. Each claim is annotated for check-worthiness, indicating whether it merits fact-checking.
+- Derived from the existing WildChat corpus, the dataset contains **121,905 factual claims** extracted from 7,587 system utterances across 3,000 conversations. Each claim is annotated for check-worthiness, indicating whether it merits fact-checking.
 - This resource aims to help the community to move beyond traditional explicit information access to better understand and address the **implicit information access** that arises in real-world user-system conversations. 
-
-## Methods Overview
-
-This repository builds on prior work in **claim extraction** and **check-worthiness detection**.  
-We use the following methods, as described in the paper:
-
-- **FHuo (Huo et al. 2023)** — Extracts factual statements from system utterances by prompting an LLM directly. 
-  [[Paper link]](https://dl.acm.org/doi/fullHtml/10.1145/3624918.3625336/)  
-
-- **FSong (Song et al. 2024)** — Extracts only *verifiable* factual claims. Produces broader coverage, yielding nearly 3× more claims than FHuo.  
-  [[Paper link]](https://aclanthology.org/2024.findings-emnlp.552//)  
-
-- **Hassan (Hassan et al. 2015)** — one of the earliest check-worthiness detection approaches, originally based on crowd annotation guidelines. In our work, we adapted it into an LLM prompt to classify claims as check-worthy or not.  
-  [[Paper link]](https://dl.acm.org/doi/10.1145/2806416.2806652)  
-
-- **Majer (Majer & Šnajder 2024)** — A recent check-worthiness detection method, using an effective LLM prompt designed to identify both factual and check-worthy factual claims.  
-  [[Paper link]](https://aclanthology.org/2024.fever-1.27//)  
-
-These methods are combined in different ways (e.g., intersection, union) to estimate the prevalence of check-worthy claims and to evaluate classifier effectiveness (See Section 4.1 of the paper).
-
-## Statistics
-![Statistics](https://github.com/shakibaam/wildclaims/blob/main/Statistics.png?raw=true)
-
 
 ## Data Release  
 
 The directory [`Annotations`](Annotations/) contains utterance-level results, human annotations, and full claim extractions used in our check-worthiness analysis.
+
+This resource builds on prior work in **claim extraction** and **check-worthiness detection**.
+Specifically, we use [Huo et al., 2023](https://dl.acm.org/doi/fullHtml/10.1145/3624918.3625336/) and [Song et al., 2024](https://aclanthology.org/2024.findings-emnlp.552//) for claim extraction, and [Hassan et al., 2015](https://dl.acm.org/doi/10.1145/2806416.2806652) and [Majer et al., 2024](https://aclanthology.org/2024.fever-1.27//) for check-worthiness classification. See [**`Generation/README.md`**](Generation/) for more details.
 
 - [**`run_factual_claim_extraction.csv`**](Annotations/run_factual_claim_extraction.csv)  
   Full set of extracted factual claims (~31K with `FHuo`, ~91K with `FSong`). Each row corresponds to a claim linked to its source utterance (`Selected_Agent_Utterance`, `Conversation_Hash`, `Claim_Extr_Method`, `Individual_Statement`) with classifier outputs (`Hassan`, `Majer`). 
@@ -53,6 +33,10 @@ The directory [`Annotations`](Annotations/) contains utterance-level results, hu
 Together, these files enable replication of utterance-level and claim-level statistics, as well as evaluation of human vs. automatic check-worthiness classification.  
 
 👉 For detailed schema and column descriptions, see [`Annotations/README.md`](Annotations/README.md).
+
+## WilClaims Statistics
+![Statistics](https://github.com/shakibaam/wildclaims/blob/main/Statistics.png?raw=true)
+
 
 
 ## Data Generation Pipeline
@@ -75,8 +59,7 @@ The [`Generation/`](./Generation/) directory contains scripts for preparing, lab
    - **FSong Method** [**`FSong_method.py`**](Generation/FSong_method.py): Generates JSONLs, runs FSong extraction, maps claims back, and explodes them into one-row-per-claim.  
 
 5. **Check-Worthiness Classification** [**`CW.py`**](Generation/CW.py)  
-   - Classifies factual statements as **CFS** (Check-worthy Factual Sentence), **UFS** (Unimportant Factual Sentence), or **NFS** (Non-Factual Sentence).  
-   - Supports both *Major* and *Hassan* prompt variants.  
+   - Classifies factual statements; supports both *Major* and *Hassan* prompt variants.  
 
 📂 **Details:** See the [Generation/README.md](./Generation/README.md) for complete pipeline descriptions, usage examples, and command-line arguments.
 
@@ -106,4 +89,15 @@ The directory [`Analysis`](Analaysis/) contains Python scripts used to analyze t
 
 
 
-  
+## License
+
+WildClaims, following WildChat, is currently released under the [ODC-By 1.0](https://opendatacommons.org/licenses/by/1-0/) license, and by using WildClaims, you are agreeing to its usage terms.
+
+
+<!-- ## Citation
+
+TBA -->
+
+## Contact
+
+If you have any questions, please contact Shakiba Amirshahi or Hideaki Joko hideaki.joko@ru.nl
