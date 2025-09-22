@@ -50,121 +50,24 @@ Together, these files enable replication of utterance-level and claim-level stat
 👉 For detailed schema and column descriptions, see [`Annotations/README.md`](Annotations/README.md).
 
 
+## Analysis  
 
+The directory [`Scripts`](Scripts/) contains Python scripts used to analyze the annotations and reproduce results reported in the paper.  
 
-## Scripts Overview
+- [**`Statistics_3k_Conversation.py`**](Scripts/Statistics_3k_Conversation.py)  
+  Generates descriptive statistics for the 3,000 sampled conversations. Outputs counts of utterances, unique conversations, turn distributions, average lengths of user questions and agent utterances, and task classification distributions.  
 
-### `Statistics_3k_Conversation.py`
+- [**`Statistics_Fact_Claim_Extraction_3k.py`**](Scripts/Statistics_Fact_Claim_Extraction_3k.py)  
+  Computes statistics on factual claim extraction across the 3k conversations, comparing **FHuo** and **FSong** methods. Reports total claims, average claims per utterance/conversation, and coverage statistics.  
 
-**Purpose**  
-Generates descriptive statistics for the 3,000 sampled conversations from the WildChat dataset.  
-This provides a high-level overview of conversation structure and task distribution.
+- [**`Statistics_Human_Annotations.py`**](Scripts/Statistics_Human_Annotations.py)  
+  Analyzes the 200 human-annotated claims. Provides row counts per extraction method, percentages of TRUE labels (`Human1_CW`, `Human2_CW`, `Gold`), and inter-annotator agreement using Cohen’s κ.  
 
-**Input**  
-- `Annotations/run_analysis.csv` (utterance-level annotations)
+- [**`Effectiveness_Automatic_Check_Worthiness.py`**](Scripts/Effectiveness_Automatic_Check_Worthiness.py)  
+  Evaluates automatic CW classifiers (`Hassan`, `Majer`, `Intersection`, `Union`) against the human-annotated gold labels. Reports Precision, Recall, F1-score, and Cohen’s κ for each extraction method.  
 
-**Output (printed to console)**  
-- **#Utterances**: Total number of rows in the dataset  
-- **Unique conversations**: Number of distinct `Conversation_Hash` values  
-- **Turn distribution**: Counts and percentages of single-turn vs. multi-turn conversations  
-- **Average turn index per conversation**: Mean of number of turns within each conversation  
-- **Average words per user question** (`Corresponding_User_Question`)  
-- **Average words per agent utterance** (`Selected_Agent_Utterance`)  
-- **Task classification distribution**: Count and percentage of utterances per `Task_Classification` label  
+- [**`Prevalence_Check_Worthy_3k.py`**](Scripts/Prevalence_Check_Worthy_3k.py)  
+  Estimates the prevalence of CW claims across the 3,000 sampled conversations. Reports percentages of CW claims, utterances with ≥1 CW claim, and conversations with ≥1 CW claim for all classifier–extraction combinations. 
 
-
-
-
-### `Statistics_Fact_Claim_Extraction_3k.py`
-
-**Purpose**  
-Computes statistics about factual claim extraction on the 3,000 sampled conversations, comparing the **FHuo** and **FSong** extraction methods.  
-Focuses on claim counts, averages, and coverage at both utterance and conversation levels.
-
-**Input**  
-- `Annotations/run_analysis.csv` (utterance-level annotations with claim arrays)
-
-**Output (printed to console)**  
-- **Total number of extracted claims**  
-  - Total elements in `FHuo_Hassan` arrays  
-  - Total elements in `FSong_Hassan` arrays  
-- **Average claims per utterance**  
-  - Average number of claims in `FHuo_Hassan` per utterance  
-  - Average number of claims in `FSong_Hassan` per utterance  
-- **Average claims per conversation**  
-  - Average number of claims in `FHuo_Hassan` per conversation  
-  - Average number of claims in `FSong_Hassan` per conversation  
-- **Coverage statistics**  
-  - % of utterances with ≥1 extracted claim (FHuo vs. FSong)  
-  - % of conversations with ≥1 extracted claim (FHuo vs. FSong)  
-
-
-
-### `Statistics_Human_Annotations.py`
-
-**Purpose**  
-Analyzes the **200 human-annotated claims** to measure inter-annotator agreement and compare human labels against automatic classifiers.  
-Provides per-method statistics for **FHuo** and **FSong** claim extraction.
-
-**Input**  
-- `Annotations/Human_Annotation.csv` (200 annotated claims)
-
-**Output (printed to console)**  
-- **Row counts per method**: Number of annotated claims for FHuo and FSong  
-- **Percentage of TRUE labels**  
-  - For `Human1_CW`  
-  - For `Human2_CW`  
-  - For `Gold` (final aggregated label)  
-- **Cohen’s κ scores**  
-  - Agreement between Human1 and Human2 (binary check-worthiness decisions)  
-
-
-### `Effectiveness_Automatic_Check_Worthiness.py`
-
-**Purpose**  
-Evaluates the effectiveness of **automatic check-worthiness (CW) classifiers** against the human-annotated gold standard.  
-Reports standard evaluation metrics to benchmark the Hassan, Majer, Intersection, and Union of these methods.
-
-**Input**  
-- `Annotations/Human_Annotation.csv` (200 annotated claims)
-
-**Output (printed to console)**  
-For each claim extraction method (*FHuo* and *FSong*):  
-- **Precision**, **Recall**, **F1-score** (binary classification vs. Gold)  
-- **Cohen’s κ** (agreement between automatic method and Gold)  
-- Separate analyses for:  
-  - `Hassan_Binary`  
-  - `Majer_Binary`  
-  - `Intersection` (Hassan ∩ Majer)  
-  - `Union` (Hassan ∪ Majer) 
-
-
-
-### `Prevalence_Check_Worthy_3k.py`
-
-**Purpose**  
-Estimates the prevalence of **check-worthy (CW) claims** across the 3,000 sampled conversations, using different CW classifiers (Hassan, Majer, Intersection, Union) applied to both FHuo and FSong claim extraction methods.
-
-**Input**  
-- `Annotations/run_analysis.csv` (utterance-level annotations with claim arrays)
-
-**Output (printed to console)**  
-For each method combination  
-(*FHuo_Hassan, FHuo_Majer, FHuo_Intersection, FHuo_Union, FSong_Hassan, FSong_Majer, FSong_Intersection, FSong_Union*):  
-- **% of CW claims among all extracted claims**  
-  - e.g., number of TRUE values across all arrays ÷ total number of elements  
-- **% of utterances with ≥1 CW claim**  
-  - proportion of rows where at least one claim is marked TRUE  
-- **% of conversations with ≥1 CW claim**  
-  - proportion of conversations where at least one utterance contains a CW claim 
-
-## Usage
-
-For detailed instructions on running the analysis scripts, please see the [Scripts README](Scripts/README.md).
-
-Each script can be run independently to reproduce the analyses reported in the paper. Make sure to install any required dependencies by running:
-
-```bash
-pip install -r requirements.txt
-```
+  For detailed instructions on running the analysis scripts, see the [Scripts README](Scripts/README.md). 
 

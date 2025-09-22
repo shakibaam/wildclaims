@@ -1,93 +1,113 @@
-# Analysis Scripts
+### `Statistics_3k_Conversation.py`
 
-This directory contains Python scripts to reproduce the analyses reported in the paper *"Information Access Conversations in the Wild(Chat)"*. Each script processes the annotation files and generates specific statistics or evaluation metrics.
+**Purpose**  
+Generates descriptive statistics for the 3,000 sampled conversations from the WildChat dataset.  
+This provides a high-level overview of conversation structure and task distribution.
 
-## Prerequisites
+**Input**  
+- `Annotations/run_analysis.csv` (utterance-level annotations)
 
-Before running the scripts, make sure you have Python 3.x installed and install the required dependencies:
+**Output (printed to console)**  
+- **#Utterances**: Total number of rows in the dataset  
+- **Unique conversations**: Number of distinct `Conversation_Hash` values  
+- **Turn distribution**: Counts and percentages of single-turn vs. multi-turn conversations  
+- **Average turn index per conversation**: Mean of number of turns within each conversation  
+- **Average words per user question** (`Corresponding_User_Question`)  
+- **Average words per agent utterance** (`Selected_Agent_Utterance`)  
+- **Task classification distribution**: Count and percentage of utterances per `Task_Classification` label  
+
+
+
+
+### `Statistics_Fact_Claim_Extraction_3k.py`
+
+**Purpose**  
+Computes statistics about factual claim extraction on the 3,000 sampled conversations, comparing the **FHuo** and **FSong** extraction methods.  
+Focuses on claim counts, averages, and coverage at both utterance and conversation levels.
+
+**Input**  
+- `Annotations/run_analysis.csv` (utterance-level annotations with claim arrays)
+
+**Output (printed to console)**  
+- **Total number of extracted claims**  
+  - Total elements in `FHuo_Hassan` arrays  
+  - Total elements in `FSong_Hassan` arrays  
+- **Average claims per utterance**  
+  - Average number of claims in `FHuo_Hassan` per utterance  
+  - Average number of claims in `FSong_Hassan` per utterance  
+- **Average claims per conversation**  
+  - Average number of claims in `FHuo_Hassan` per conversation  
+  - Average number of claims in `FSong_Hassan` per conversation  
+- **Coverage statistics**  
+  - % of utterances with ≥1 extracted claim (FHuo vs. FSong)  
+  - % of conversations with ≥1 extracted claim (FHuo vs. FSong)  
+
+
+
+### `Statistics_Human_Annotations.py`
+
+**Purpose**  
+Analyzes the **200 human-annotated claims** to measure inter-annotator agreement and compare human labels against automatic classifiers.  
+Provides per-method statistics for **FHuo** and **FSong** claim extraction.
+
+**Input**  
+- `Annotations/Human_Annotation.csv` (200 annotated claims)
+
+**Output (printed to console)**  
+- **Row counts per method**: Number of annotated claims for FHuo and FSong  
+- **Percentage of TRUE labels**  
+  - For `Human1_CW`  
+  - For `Human2_CW`  
+  - For `Gold` (final aggregated label)  
+- **Cohen’s κ scores**  
+  - Agreement between Human1 and Human2 (binary check-worthiness decisions)  
+
+
+### `Effectiveness_Automatic_Check_Worthiness.py`
+
+**Purpose**  
+Evaluates the effectiveness of **automatic check-worthiness (CW) classifiers** against the human-annotated gold standard.  
+Reports standard evaluation metrics to benchmark the Hassan, Majer, Intersection, and Union of these methods.
+
+**Input**  
+- `Annotations/Human_Annotation.csv` (200 annotated claims)
+
+**Output (printed to console)**  
+For each claim extraction method (*FHuo* and *FSong*):  
+- **Precision**, **Recall**, **F1-score** (binary classification vs. Gold)  
+- **Cohen’s κ** (agreement between automatic method and Gold)  
+- Separate analyses for:  
+  - `Hassan_Binary`  
+  - `Majer_Binary`  
+  - `Intersection` (Hassan ∩ Majer)  
+  - `Union` (Hassan ∪ Majer) 
+
+
+
+### `Prevalence_Check_Worthy_3k.py`
+
+**Purpose**  
+Estimates the prevalence of **check-worthy (CW) claims** across the 3,000 sampled conversations, using different CW classifiers (Hassan, Majer, Intersection, Union) applied to both FHuo and FSong claim extraction methods.
+
+**Input**  
+- `Annotations/run_analysis.csv` (utterance-level annotations with claim arrays)
+
+**Output (printed to console)**  
+For each method combination  
+(*FHuo_Hassan, FHuo_Majer, FHuo_Intersection, FHuo_Union, FSong_Hassan, FSong_Majer, FSong_Intersection, FSong_Union*):  
+- **% of CW claims among all extracted claims**  
+  - e.g., number of TRUE values across all arrays ÷ total number of elements  
+- **% of utterances with ≥1 CW claim**  
+  - proportion of rows where at least one claim is marked TRUE  
+- **% of conversations with ≥1 CW claim**  
+  - proportion of conversations where at least one utterance contains a CW claim 
+
+## Usage
+
+For detailed instructions on running the analysis scripts, please see the [Scripts README](Scripts/README.md).
+
+Each script can be run independently to reproduce the analyses reported in the paper. Make sure to install any required dependencies by running:
 
 ```bash
 pip install -r requirements.txt
 ```
-
-## Scripts Overview
-
-### `Statistics_3k_Conversation.py`
-
-**Purpose**: Generates descriptive statistics for the 3,000 sampled conversations from the WildChat dataset.
-
-**Input**: `Annotations/run_analysis.csv` (utterance-level annotations)
-
-**Output**: Console output with conversation statistics including:
-- Total utterances and unique conversations
-- Turn distribution (single-turn vs. multi-turn)
-- Average turn index per conversation
-- Average words per user question and agent utterance
-- Task classification distribution
-
-### `Statistics_Fact_Claim_Extraction_3k.py`
-
-**Purpose**: Computes statistics about factual claim extraction comparing FHuo and FSong extraction methods.
-
-**Input**: `Annotations/run_analysis.csv` (utterance-level annotations with claim arrays)
-
-**Output**: Console output with extraction statistics including:
-- Total number of extracted claims by method
-- Average claims per utterance and conversation
-- Coverage statistics (% of utterances/conversations with ≥1 claim)
-
-### `Statistics_Human_Annotations.py`
-
-**Purpose**: Analyzes the 200 human-annotated claims for inter-annotator agreement.
-
-**Input**: `Annotations/Human_Annotation.csv` (200 annotated claims)
-
-**Output**: Console output with annotation statistics including:
-- Row counts per extraction method
-- Percentage of TRUE labels for each annotator and gold standard
-- Cohen's κ scores for inter-annotator agreement
-
-### `Effectiveness_Automatic_Check_Worthiness.py`
-
-**Purpose**: Evaluates automatic check-worthiness classifiers against human-annotated gold standard.
-
-**Input**: `Annotations/Human_Annotation.csv` (200 annotated claims)
-
-**Output**: Console output with effectiveness metrics including:
-- Precision, Recall, F1-score for each classifier (Hassan, Majer, Intersection, Union)
-- Cohen's κ agreement scores between automatic methods and gold standard
-- Separate analyses for FHuo and FSong extraction methods
-
-### `Prevalence_Check_Worthy_3k.py`
-
-**Purpose**: Estimates prevalence of check-worthy claims across the 3,000 sampled conversations.
-
-**Input**: `Annotations/run_analysis.csv` (utterance-level annotations with claim arrays)
-
-**Output**: Console output with prevalence statistics including:
-- Percentage of check-worthy claims among all extracted claims
-- Percentage of utterances with ≥1 check-worthy claim
-- Percentage of conversations with ≥1 check-worthy claim
-- Results for all method combinations (FHuo/FSong × Hassan/Majer/Intersection/Union)
-
-## Usage
-
-Run each script independently from the repository root directory:
-
-```bash
-# Navigate to repository root
-cd /path/to/Wildchat_Paper_Github
-
-# Run individual scripts
-python3 Scripts/Statistics_3k_Conversation.py
-python3 Scripts/Statistics_Fact_Claim_Extraction_3k.py
-python3 Scripts/Statistics_Human_Annotations.py
-python3 Scripts/Effectiveness_Automatic_Check_Worthiness.py
-python3 Scripts/Prevalence_Check_Worthy_3k.py
-```
-
-## Notes
-
-- All scripts expect to be run from the repository root directory
-- Input files should be placed in the `Annotations/` directory
-- Some scripts reference files with slightly different names (e.g., `3k_Results.csv`, `Human_Annotation_200.csv`) - ensure your annotation files match the expected filenames or update the file paths in the scripts accordingly
