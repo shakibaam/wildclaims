@@ -53,22 +53,22 @@ Together, these files enable replication of utterance-level and claim-level stat
 
 ## Analysis  
 
-The directory [`Scripts`](Scripts/) contains Python scripts used to analyze the annotations and reproduce results reported in the paper.  
+The directory [`Analysis`](Analaysis/) contains Python scripts used to analyze the annotations and reproduce results reported in the paper.  
 
-- [**`Statistics_3k_Conversation.py`**](Scripts/Statistics_3k_Conversation.py)  
+- [**`Statistics_3k_Conversation.py`**](Analaysis/Statistics_3k_Conversation.py)  
   Generates descriptive statistics for the 3,000 sampled conversations. Outputs counts of utterances, unique conversations, turn distributions, average lengths of user questions and agent utterances, and task classification distributions.  
 
-- [**`Statistics_Fact_Claim_Extraction_3k.py`**](Scripts/Statistics_Fact_Claim_Extraction_3k.py)  
+- [**`Statistics_Fact_Claim_Extraction_3k.py`**](Analaysis/Statistics_Fact_Claim_Extraction_3k.py)  
   Computes statistics on factual claim extraction across the 3k conversations, comparing **FHuo** and **FSong** methods. Reports total claims, average claims per utterance/conversation, and coverage statistics.  
 
-- [**`Statistics_Human_Annotations.py`**](Scripts/Statistics_Human_Annotations.py)  
+- [**`Statistics_Human_Annotations.py`**](Analaysis/Statistics_Human_Annotations.py)  
   Analyzes the 200 human-annotated claims. Provides row counts per extraction method, percentages of TRUE labels (`Human1_CW`, `Human2_CW`, `Gold`), and inter-annotator agreement using Cohen’s κ.  
 
-- [**`Effectiveness_Automatic_Check_Worthiness.py`**](Scripts/Effectiveness_Automatic_Check_Worthiness.py)  
+- [**`Effectiveness_Automatic_Check_Worthiness.py`**](Analaysis/Effectiveness_Automatic_Check_Worthiness.py)  
   Evaluates automatic CW classifiers (`Hassan`, `Majer`, `Intersection`, `Union`) against the human-annotated gold labels. Reports Precision, Recall, F1-score, and Cohen’s κ for each extraction method.  
 
-- [**`Prevalence_Check_Worthy_3k.py`**](Scripts/Prevalence_Check_Worthy_3k.py)  
+- [**`Prevalence_Check_Worthy_3k.py`**](Analaysis/Prevalence_Check_Worthy_3k.py)  
   Estimates the prevalence of CW claims across the 3,000 sampled conversations. Reports percentages of CW claims, utterances with ≥1 CW claim, and conversations with ≥1 CW claim for all classifier–extraction combinations. 
 
-  For detailed instructions on running the analysis scripts, see the [Scripts README](Scripts/README.md). 
+  For detailed instructions on running the analysis scripts, see the [Analaysis README](Analaysis/README.md). 
 
