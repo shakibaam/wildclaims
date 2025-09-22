@@ -4,6 +4,7 @@
 **Purpose**  
 This script identifies and labels conversations in the WildChat dataset that are primarily about **mathematics** or **coding**, so they can be filtered out before claim extraction and check-worthiness analysis.  
 
+
 **Pipeline**  
 1. **Explode User Utterances**  
    - Reads the input conversation CSV.  
@@ -34,15 +35,15 @@ This script identifies and labels conversations in the WildChat dataset that are
 - `batch_results.jsonl` – batch API results (must be manually downloaded and placed).  
 - `labeled_output.csv` – final labeled dataset with one row per conversation and a `Label` column (`Math`, `Coding`, or `Others`).  
 
-**How to Run**
-```bash
+
+**How to Run**  
 python labeling_math_and_code.py \
-    --input_csv path/to/input.csv \
-    --output_dir outputs/labeling_math_and_code \
-    --model_name gpt-4.1-mini-2025-04-14
+  --input_csv path/to/input.csv \
+  --output_dir outputs/labeling_math_and_code \
+  --model_name gpt-4.1-mini-2025-04-14
 
 
-`Preprocess_Files_For_Pipeline.py`
+### `Preprocess_Files_For_Pipeline.py`
 
 **Purpose**  
 This script runs the **preprocessing pipeline** to prepare system utterances (Agent/System) for downstream **claim extraction**.  
@@ -80,7 +81,6 @@ It takes in raw conversation CSV files, explodes them into utterance-level rows,
 - `preprocessed_unified.csv` – unified dataset containing both utterances and contexts (used as input for claim extraction methods such as SIQing or VeriScore)
 
 **How to Run**
-```bash
 python Preprocess_Files_For_Pipeline.py \
   --input_csv path/to/input.csv \
   --output_dir outputs/preprocessing
@@ -138,7 +138,6 @@ This classification enables downstream analyses such as **distribution of tasks*
 ---
 
 **How to Run**
-```bash
 python task_classification.py \
   --input_csv path/to/input.csv \
   --output_dir outputs/task_classification \
@@ -187,7 +186,6 @@ Generates factual claims from agent/system utterances using the official VeriSco
 
 **Setup**  
 Clone the VeriScore repository:  
-```bash
 git clone https://github.com/Yixiao-Song/VeriScore
 
 
