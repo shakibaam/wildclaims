@@ -61,12 +61,12 @@ def batch_generate_jsonl_from_new_format(
     print(f"🎉 All JSONL files saved in: {os.path.abspath(output_dir)}")
 
 
-def run_veriscore(requests_dir: str, model_name: str = 'gpt-4.1-2025-04-14', veriscore_dir: Optional[str] = None):
+def run_FSong(requests_dir: str, model_name: str = 'gpt-4.1-2025-04-14', FSong_dir: Optional[str] = None):
     """
     Run VeriScore extraction for all JSONL files in the requests_dir.
     """
-    if veriscore_dir is None:
-        veriscore_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../VeriScore'))
+    if FSong_dir is None:
+        FSong_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../VeriScore'))
     # Gather all folders to process
     row_folders = [f for f in os.listdir(requests_dir) if os.path.isdir(os.path.join(requests_dir, f))]
     total_files = 0
@@ -84,23 +84,23 @@ def run_veriscore(requests_dir: str, model_name: str = 'gpt-4.1-2025-04-14', ver
     for folder_path, file_name in tqdm(file_paths, desc="Processing files"):
         folder_path = os.path.abspath(folder_path)
         cmd = [
-            "python3", "-m", "veriscore.extract_claims",
+            "python3", "-m", "FSong.extract_claims",
             "--data_dir", folder_path,
             "--input_file", file_name,
             "--model_name", model_name
         ]
         print("🚀 Running:", " ".join(cmd))
-        subprocess.run(cmd, cwd=veriscore_dir)
+        subprocess.run(cmd, cwd=FSong_dir)
 
 
-def map_veriscore_claims_to_csv(veriscore_dir, original_csv_path, output_csv_path):
+def map_FSong_claims_to_csv(FSong_dir, original_csv_path, output_csv_path):
     """
     Maps VeriScore claims from JSONL files back to the original CSV rows.
     """
     df = pd.read_csv(original_csv_path)
     print(f"📄 Original CSV has {len(df)} rows")
     claims_mapping = {}
-    for root, dirs, files in os.walk(veriscore_dir):
+    for root, dirs, files in os.walk(FSong_dir):
         for file in files:
             if file.endswith('.jsonl'):
                 file_path = os.path.join(root, file)
@@ -154,7 +154,7 @@ def map_veriscore_claims_to_csv(veriscore_dir, original_csv_path, output_csv_pat
     return df
 
 
-def explode_veriscore_claims(csv_path, output_csv_path):
+def explode_FSong_claims(csv_path, output_csv_path):
     """
     Explodes the Factual_Statements column into separate rows, one for each claim.
     """
@@ -221,14 +221,14 @@ def main():
     parser.add_argument('--input_csv', type=str, required=True, help='Input CSV file path')
     parser.add_argument('--output_dir', type=str, required=True, help='Output directory for all results')
     parser.add_argument('--model_name', type=str, default='gpt-4', help='Model name for batch requests (default: gpt-4)')
-    parser.add_argument('--veriscore_model', type=str, default='gpt-4.1-2025-04-14', help='Model name for VeriScore extraction (default: gpt-4.1-2025-04-14)')
-    parser.add_argument('--veriscore_dir', type=str, default='VeriScore', help='Path to VeriScore directory (default: VeriScore')
+    parser.add_argument('--FSong_model', type=str, default='gpt-4.1-2025-04-14', help='Model name for VeriScore extraction (default: gpt-4.1-2025-04-14)')
+    parser.add_argument('--FSong_dir', type=str, default='VeriScore', help='Path to VeriScore directory (default: VeriScore')
     args = parser.parse_args()
 
     os.makedirs(args.output_dir, exist_ok=True)
     requests_dir = os.path.join(args.output_dir, 'batch_requests')
-    mapped_csv = os.path.join(args.output_dir, 'veriscore_with_factual_statements.csv')
-    exploded_csv = os.path.join(args.output_dir, 'veriscore_exploded_statements.csv')
+    mapped_csv = os.path.join(args.output_dir, 'FSong_with_factual_statements.csv')
+    exploded_csv = os.path.join(args.output_dir, 'FSong_exploded_statements.csv')
 
     print(f"\n[1/4] Generating batch requests JSONL files...")
     batch_generate_jsonl_from_new_format(
@@ -238,20 +238,20 @@ def main():
     )
 
     print(f"\n[2/4] Running VeriScore extraction...")
-    run_veriscore(requests_dir, model_name=args.veriscore_model, veriscore_dir=args.veriscore_dir)
+    run_FSong(requests_dir, model_name=args.FSong_model, FSong_dir=args.FSong_dir)
 
     print(f"\n[2.5/4] Copying VeriScore output files to output directory...")
-    copy_jsonl_files(args.veriscore_dir if args.veriscore_dir else requests_dir, args.output_dir)
+    copy_jsonl_files(args.FSong_dir if args.FSong_dir else requests_dir, args.output_dir)
 
     print(f"\n[3/4] Mapping VeriScore claims to CSV...")
-    map_veriscore_claims_to_csv(
-        veriscore_dir=args.output_dir,
+    map_FSong_claims_to_csv(
+        FSong_dir=args.output_dir,
         original_csv_path=args.input_csv,
         output_csv_path=mapped_csv
     )
 
     print(f"\n[4/4] Exploding claims to rows...")
-    explode_veriscore_claims(
+    explode_FSong_claims(
         csv_path=mapped_csv,
         output_csv_path=exploded_csv
     )

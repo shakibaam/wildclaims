@@ -6,8 +6,8 @@ import json
 from openai import OpenAI
 import time
 
-def make_siqing_batch_request_file(input_csv_path, output_dir, model_name="gpt-4.1-2025-04-14"):
-    output_jsonl_path = os.path.join(output_dir, "siqing_batch_requests.jsonl")
+def make_FHuo_batch_request_file(input_csv_path, output_dir, model_name="gpt-4.1-2025-04-14"):
+    output_jsonl_path = os.path.join(output_dir, "FHuo_batch_requests.jsonl")
     df = pd.read_csv(input_csv_path)
     print(f"📄 Creating SIQing batch request file from {input_csv_path}")
     print("-" * 60)
@@ -50,8 +50,8 @@ def make_siqing_batch_request_file(input_csv_path, output_dir, model_name="gpt-4
     return output_jsonl_path
 
 
-def map_siqing_results_to_csv(batch_results_path, input_csv_path, output_dir):
-    output_csv_path = os.path.join(output_dir, "siqing_with_factual_statements.csv")
+def map_FHuo_results_to_csv(batch_results_path, input_csv_path, output_dir):
+    output_csv_path = os.path.join(output_dir, "FHuo_with_factual_statements.csv")
     df = pd.read_csv(input_csv_path)
     print(f"Original CSV has {len(df)} rows")
     results_mapping = {}
@@ -81,8 +81,8 @@ def map_siqing_results_to_csv(batch_results_path, input_csv_path, output_dir):
     return output_csv_path
 
 
-def explode_siqing_factual_statements(csv_path, output_dir):
-    output_csv_path = os.path.join(output_dir, "siqing_exploded_statements.csv")
+def explode_FHuo_factual_statements(csv_path, output_dir):
+    output_csv_path = os.path.join(output_dir, "FHuo_exploded_statements.csv")
     df = pd.read_csv(csv_path)
     print(f"📄 Loading SIQing CSV with {len(df)} rows")
     print(f"📊 Columns: {list(df.columns)}")
@@ -158,15 +158,15 @@ def main():
     args = parser.parse_args()
     os.makedirs(args.output_dir, exist_ok=True)
 
-    metadata_file = os.path.join(args.output_dir, "siqing_batch_metadata.jsonl")
-    results_file = os.path.join(args.output_dir, "siqing_batch_results.jsonl")
+    metadata_file = os.path.join(args.output_dir, "FHuo_batch_metadata.jsonl")
+    results_file = os.path.join(args.output_dir, "FHuo_batch_results.jsonl")
 
     if os.path.exists(metadata_file):
         print("Batch metadata found.")
         if os.path.exists(results_file):
             print("Results found. Mapping and exploding...")
-            mapped_csv = map_siqing_results_to_csv(results_file, args.input_csv, args.output_dir)
-            exploded_csv = explode_siqing_factual_statements(mapped_csv, args.output_dir)
+            mapped_csv = map_FHuo_results_to_csv(results_file, args.input_csv, args.output_dir)
+            exploded_csv = explode_FHuo_factual_statements(mapped_csv, args.output_dir)
             print(f"Done! Exploded CSV saved to {exploded_csv}")
         else:
             print("Checking batch status...")
@@ -174,15 +174,15 @@ def main():
             if statuses and statuses[0]['status'] == 'completed':
                 print("Fetching batch output...")
                 fetch_batch_output(metadata_file, results_file)
-                mapped_csv = map_siqing_results_to_csv(results_file, args.input_csv, args.output_dir)
-                exploded_csv = explode_siqing_factual_statements(mapped_csv, args.output_dir)
+                mapped_csv = map_FHuo_results_to_csv(results_file, args.input_csv, args.output_dir)
+                exploded_csv = explode_FHuo_factual_statements(mapped_csv, args.output_dir)
                 print(f"Done! Exploded CSV saved to {exploded_csv}")
             else:
                 print(f"Batch not completed yet. Status: {statuses[0]['status'] if statuses else 'Unknown'}")
                 print("You may need to rerun this script later to process results.")
     else:
         print("No batch metadata found. Submitting new batch...")
-        batch_jsonl = make_siqing_batch_request_file(args.input_csv, args.output_dir, model_name=args.model_name)
+        batch_jsonl = make_FHuo_batch_request_file(args.input_csv, args.output_dir, model_name=args.model_name)
         submit_openai_batch(batch_jsonl, metadata_file, description="SIQing factual statement extraction")
         print("Batch submitted. Please rerun this script later to fetch results.")
 

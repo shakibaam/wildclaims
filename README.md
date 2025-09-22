@@ -51,6 +51,31 @@ Together, these files enable replication of utterance-level and claim-level stat
 👉 For detailed schema and column descriptions, see [`Annotations/README.md`](Annotations/README.md).
 
 
+## Data Generation Pipeline
+
+The [`Generation/`](./Generation/) directory contains scripts for preparing, labeling, and extracting claims from WildChat conversations before running check-worthiness analysis.  
+
+**Workflow Summary:**
+1. **Preprocessing** (`Preprocess_Files_For_Pipeline.py`)  
+   - Explodes conversations into utterance-level rows.  
+   - Generates context windows for each system utterance.  
+
+2. **Filtering Math & Code** (`labeling_math_and_code.py`)  
+   - Labels conversations as *Math*, *Coding*, or *Others* to filter out non-relevant domains.  
+
+3. **Task Classification** (`task_classification.py`)  
+   - Categorizes user utterances into high-level task types (information seeking, creative writing, reasoning, etc.).  
+
+4. **Claim Extraction**  
+   - **FHuo Method** (`FHuo_method.py`): Extracts factual statements from system responses via OpenAI Batch.  
+   - **FSong Method** (`FSong_method.py`): Generates JSONLs, runs FSong extraction, maps claims back, and explodes them into one-row-per-claim.  
+
+5. **Check-Worthiness Classification** (`CW.py`)  
+   - Classifies factual statements as **CFS** (Check-worthy Factual Sentence), **UFS** (Unimportant Factual Sentence), or **NFS** (Non-Factual Sentence).  
+   - Supports both *Major* and *Hassan* prompt variants.  
+
+📂 **Details:** See the [Generation/README.md](./Generation/README.md) for complete pipeline descriptions, usage examples, and command-line arguments.
+
 
 
 ## Analysis  

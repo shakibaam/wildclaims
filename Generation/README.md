@@ -9,7 +9,6 @@ This script identifies and labels conversations in the WildChat dataset that are
 1. **Explode User Utterances**  
    - Reads the input conversation CSV.  
    - Creates a new row for every **user utterance**, preserving context, preceding system/agent utterances, and original metadata.  
-   - Saves the result as `exploded.csv` in the output directory.  
 
 2. **Batch Request Creation**  
    - Generates a JSONL file (`batch_requests.jsonl`) for the OpenAI Batch API.  
@@ -20,20 +19,13 @@ This script identifies and labels conversations in the WildChat dataset that are
      - **Others** – all remaining conversations.  
 
 3. **Submit to OpenAI**  
-   - You manually submit the `batch_requests.jsonl` file to the OpenAI Batch API.  
-   - Once the job completes, place the results file as `batch_results.jsonl` in the same output directory.  
+   - Submit the `batch_requests.jsonl` file to the OpenAI Batch API.  
 
 4. **Mapping Results Back**  
-   - The script maps the predictions from `batch_results.jsonl` back to the exploded CSV rows using `Conversation_Hash`.  
+   - The script maps the predictions back to the exploded CSV rows using `Conversation_Hash`.  
    - Adds a `Label` column with the assigned category.  
    - Deduplicates rows by conversation.  
-   - Saves the final labeled file as `labeled_output.csv`.  
-
-**Output Files**  
-- `exploded.csv` – exploded user utterances with context.  
-- `batch_requests.jsonl` – batch request payload for OpenAI API.  
-- `batch_results.jsonl` – batch API results (must be manually downloaded and placed).  
-- `labeled_output.csv` – final labeled dataset with one row per conversation and a `Label` column (`Math`, `Coding`, or `Others`).  
+   - Saves the final labeled file  
 
 
 **How to Run**  
@@ -58,9 +50,8 @@ It takes in raw conversation CSV files, explodes them into utterance-level rows,
      - `Selected_Agent_Utterance` – the system’s utterance text  
      - `Corresponding_User_Question` – the preceding user input, if available  
      - `Selected_Agent_Column` – the column name where the utterance was located  
-   - Saves the exploded dataset as `exploded_system.csv`.
 
-2. **Generate Context Strings** (`generate_context_string`)  
+2. **Generate Context Strings** 
    - For each system utterance, builds a **context window** containing all user–agent exchanges leading up to that utterance.  
    - Contexts are formatted as Python-style lists of strings, e.g.:
      ```text
@@ -69,16 +60,6 @@ It takes in raw conversation CSV files, explodes them into utterance-level rows,
      System: Photosynthesis is the process by which plants make food...
      ]
      ```
-   - Saves results as `context_system.csv`.
-
-3. **Merge Contexts** (`preprocess`)  
-   - Merges the context strings back into the exploded DataFrame.  
-   - Produces the final preprocessed file `preprocessed_unified.csv`.
-
-**Output Files**  
-- `exploded_system.csv` – one row per system utterance with metadata  
-- `context_system.csv` – system utterances with generated conversation contexts  
-- `preprocessed_unified.csv` – unified dataset containing both utterances and contexts (used as input for claim extraction methods such as SIQing or VeriScore)
 
 **How to Run**
 python Preprocess_Files_For_Pipeline.py \
@@ -99,44 +80,6 @@ Categories include:
 - *Role playing*  
 - *Others*  
 
-This classification enables downstream analyses such as **distribution of tasks**, filtering, or comparison across model types.
-
----
-
-**Pipeline**  
-1. **Explode User Utterances** (`explode_all_user_utterances_with_all_columns`)  
-   - Converts each conversation row into multiple rows, one per user utterance.  
-   - Adds metadata:  
-     - `Turn_Num` (utterance position)  
-     - `Context_String` (prior conversation history)  
-     - `Selected_User_Utterance` (the utterance being classified)  
-     - `Selected_User_Column` (original column name).  
-   - Output: `exploded_user_utterances.csv`
-
-2. **Batch Request File Generation** (`make_task_classification_batch_request_file`)  
-   - Creates a JSONL file of requests for the OpenAI Batch API.  
-   - Each request includes the utterance and its surrounding context.  
-   - Output: `batch_requests.jsonl`
-
-3. **Submit and Fetch Batch Results**  
-   - Submits classification requests to the OpenAI Batch API.  
-   - Once results are available, fetches them and stores as `batch_results.jsonl`.
-
-4. **Map Results Back to CSV** (`map_task_classification_results_to_csv`)  
-   - Matches batch results with utterances using `(Conversation_Hash, Turn_Num)`.  
-   - Adds a new column `Task_Classification` with the predicted category.  
-   - Output: `task_classified.csv`
-
----
-
-**Output Files**  
-- `exploded_user_utterances.csv` — per-utterance dataset with context.  
-- `batch_requests.jsonl` — request payload for OpenAI Batch API.  
-- `batch_results.jsonl` — raw classification outputs from OpenAI.  
-- `task_classified.csv` — final dataset with task category labels.
-
----
-
 **How to Run**
 python task_classification.py \
   --input_csv path/to/input.csv \
@@ -144,50 +87,71 @@ python task_classification.py \
   --model_name gpt-4.1-2025-04-14
 
 
-### `siqing_method.py`
+### `FHuo_method.py`
 
 **Purpose**  
-Extracts factual statements from agent utterances using the **SIQing method**.  
+Extracts factual statements from agent utterances using the **FHuo method**.  
 This step generates candidate claims (concise factual assertions) that can be validated for check-worthiness.
 
-**Input**  
-- `preprocessed_unified.csv` (from the preprocessing pipeline)  
-  Required columns: `Conversation_Hash`, `Turn_Num`, `Context_String`, `Corresponding_User_Question`, `Selected_Agent_Utterance`
 
 **Pipeline**  
-1. **Batch Request Creation** (`make_siqing_batch_request_file`)  
-   - Creates a JSONL batch file (`siqing_batch_requests.jsonl`) for the OpenAI Batch API.  
+1. **Batch Request Creation** 
+   - Creates a JSONL batch file for the OpenAI Batch API.  
    - Each request asks the model to extract concise factual statements from an agent utterance.  
    - Identified by `custom_id = Conversation_Hash_TurnNum`.
 
-2. **Mapping Results** (`map_siqing_results_to_csv`)  
+2. **Mapping Results** 
    - Maps OpenAI batch results back to the CSV.  
    - Adds a `Factual_Statements` column containing the extracted claims.  
-   - Output: `siqing_with_factual_statements.csv`.
 
-3. **Exploding Claims** (`explode_siqing_factual_statements`)  
+3. **Exploding Claims**   
    - Splits the `Factual_Statements` list into separate rows.  
-   - Each claim is stored under `Individual_Statement` with its index (`Statement_Index`).  
-   - Output: `siqing_exploded_statements.csv`.
+   - Each claim is stored under `Individual_Statement` with its index (`Statement_Index`). 
 
-**Output Files**  
-- `siqing_batch_requests.jsonl` – batch request payloads  
-- `siqing_batch_metadata.jsonl` – metadata for submitted jobs  
-- `siqing_batch_results.jsonl` – raw model outputs  
-- `siqing_with_factual_statements.csv` – aligned claims in CSV format  
-- `siqing_exploded_statements.csv` – one claim per row, ready for downstream classification
+**How to Run**
+  python FHuo_method.py \
+  --input_csv path/to/input.csv \
+  --output_dir outputs/FHuo \
+  --model_name gpt-4.1-2025-04-14 
 
 
-### `veriscore_method.py`
+### `FSong.py`
 
 **Purpose**  
-Runs the **VeriScore claim extraction pipeline** (Song et al.) as an alternative to SIQing.  
-Generates factual claims from agent/system utterances using the official VeriScore extractor.
+End-to-end pipeline to (1) generate per-row JSONL requests from a CSV, (2) run **FSong** claim extraction on each request, (3) map extracted claims back to the CSV, and (4) explode the list of claims into one-row-per-claim.
 
 **Setup**  
-Clone the VeriScore repository:  
-git clone https://github.com/Yixiao-Song/VeriScore
+Before running this pipeline, you need to clone the FSong repository and set up the environment. Clone the FSong repository to your local machine and ensure it's properly configured for claim extraction:
+`https://github.com/Yixiao-Song/VeriScore`
 
+
+
+**Pipeline**  
+1. **Batch Request Creation**  
+   - Builds one JSONL file per row under `output_dir/batch_requests/{Conversation_Hash}/{Conversation_Hash}_{Turn_Num}.jsonl`.  
+   - Each JSON contains `question` (User + Context), `response` (agent), and metadata.
+
+2. **Run FSong** (`run_FSong`)  
+   - Calls `python -m FSong.extract_claims` for every JSONL.  
+   - Produces `claims_{hash}_{turn}.jsonl` files inside the FSong output folder.
+
+3. **Map Claims to CSV** (`map_FSong_claims_to_csv`)  
+   - Reads all `claims_{hash}_{turn}.jsonl`, matches them to CSV rows, and writes a new file:  
+     `FSong_with_factual_statements.csv` with a `Factual_Statements` JSON list column.
+
+4. **Explode Claims** (`explode_FSong_claims`)  
+   - Turns each list of claims into multiple rows.  
+   - Adds `Statement_Index` and `Individual_Statement`.  
+
+
+## How to Run
+
+python FSong.py \
+  --input_csv path/to/preprocessed_unified.csv \
+  --output_dir outputs/FSong \
+  --model_name gpt-4 \
+  --FSong_model gpt-4.1-2025-04-14 \
+  --FSong_dir path/to/FSongRepo
 
 
 ### `CW.py`
@@ -199,12 +163,9 @@ Two prompt variants are supported:
 - **Major**: Classifies into `NFS` (Non-Factual Sentence), `UFS` (Unimportant Factual Sentence), or `CFS` (Check-worthy Factual Sentence).  
 - **Hassan**: A question-driven formulation asking whether the user would care if the claim were true or false, producing the same three labels.
 
-**Input**  
-- CSV with exploded claims (e.g., from `siqing_exploded_statements.csv` or `veriscore_exploded_statements.csv`)  
-  Required columns: `Individual_Statement`, `Context_String`, `Conversation_Hash`, `Turn_Num`, `Statement_Index`
 
 **Pipeline**  
-1. **Batch Request Creation** (`make_claim_batch_request_file`)  
+1. **Batch Request Creation** 
    - Generates JSONL requests for each claim + context pair.  
    - `custom_id` encodes `(Conversation_Hash, Turn_Num, Statement_Index)`.
 
@@ -212,10 +173,7 @@ Two prompt variants are supported:
    - Submits jobs via the OpenAI Batch API.  
    - Fetches results once jobs are complete.
 
-3. **Mapping Predictions** (`add_CW_predictions_to_csv`)  
+3. **Mapping Predictions**  
    - Aligns results back into the CSV.  
    - Adds a new column with classifier predictions (default: `Major`, or user-specified).
 
-**Output**  
-- Updated CSV with one additional column (e.g., `Major` or `Hassan`) containing `NFS`, `UFS`, or `CFS` labels for each claim.  
-- Batch request/metadata/results JSONL files saved in the same output directory.
