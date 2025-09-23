@@ -21,9 +21,9 @@ def calculate_precision_recall_f1(true_positives, false_positives, false_negativ
     return precision, recall, f1
 
 def main():
-    csv_file_path = '../Annotations/Human_Annotation.csv'
+    csv_file_path = '../Annotations/human_annotations.csv'
     
-    print("Loading data from Human_Annotation.csv...")
+    print("Loading data from human_annotations.csv...")
     
     # Initialize data structures
     claim_methods = defaultdict(lambda: {

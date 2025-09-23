@@ -14,7 +14,7 @@ def count_words(text):
 
 def main():
     # Read the CSV file
-    print("Loading data from run_analysis.csv...")
+    print("Loading data from analysis.csv...")
     
     # Initialize data structures
     conversation_data = defaultdict(list)
@@ -24,7 +24,7 @@ def main():
     total_rows = 0
     
     # Read the CSV file
-    with open('../Annotations/run_analysis.csv', 'r', encoding='utf-8') as file:
+    with open('../Annotations/analysis.csv', 'r', encoding='utf-8') as file:
         reader = csv.DictReader(file)
         
         for row in reader:

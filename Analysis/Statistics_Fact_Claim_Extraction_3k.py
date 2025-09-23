@@ -26,9 +26,9 @@ def calculate_kappa(observed_agreement, expected_agreement):
     return (observed_agreement - expected_agreement) / (1 - expected_agreement)
 
 def main():
-    csv_file_path = '../Annotations/run_analysis.csv'
+    csv_file_path = '../Annotations/analysis.csv'
     
-    print("Loading data from run_analysis.csv...")
+    print("Loading data from analysis.csv...")
     
     # Initialize data structures
     FHuo_hassan_arrays = []

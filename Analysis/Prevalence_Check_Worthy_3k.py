@@ -29,9 +29,9 @@ def parse_array_string(array_str):
         return []
 
 def main():
-    csv_file_path = '../Annotations/run_analysis.csv'
+    csv_file_path = '../Annotations/analysis.csv'
     
-    print("Loading data from run_analysis.csv...")
+    print("Loading data from analysis.csv...")
     
     # Define columns to analyze in the requested order
     columns_to_analyze = [

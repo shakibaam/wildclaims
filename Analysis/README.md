@@ -7,7 +7,7 @@ Generates descriptive statistics for the 3,000 sampled conversations from the Wi
 This provides a high-level overview of conversation structure and task distribution.
 
 **Input**  
-- `Annotations/run_analysis.csv` (utterance-level annotations)
+- `Annotations/analysis.csv` (utterance-level annotations)
 
 **Output (printed to console)**  
 - **#Utterances**: Total number of rows in the dataset  
@@ -28,7 +28,7 @@ Computes statistics about factual claim extraction on the 3,000 sampled conversa
 Focuses on claim counts, averages, and coverage at both utterance and conversation levels.
 
 **Input**  
-- `Annotations/run_analysis.csv` (utterance-level annotations with claim arrays)
+- `Annotations/analysis.csv` (utterance-level annotations with claim arrays)
 
 **Output (printed to console)**  
 - **Total number of extracted claims**  
@@ -53,7 +53,7 @@ Analyzes the **200 human-annotated claims** to measure inter-annotator agreement
 Provides per-method statistics for **FHuo** and **FSong** claim extraction.
 
 **Input**  
-- `Annotations/Human_Annotation.csv` (200 annotated claims)
+- `Annotations/human_annotations.csv` (200 annotated claims)
 
 **Output (printed to console)**  
 - **Row counts per method**: Number of annotated claims for FHuo and FSong  
@@ -72,7 +72,7 @@ Evaluates the effectiveness of **automatic check-worthiness (CW) classifiers** a
 Reports standard evaluation metrics to benchmark the Hassan, Majer, Intersection, and Union of these methods.
 
 **Input**  
-- `Annotations/Human_Annotation.csv` (200 annotated claims)
+- `Annotations/human_annotations.csv` (200 annotated claims)
 
 **Output (printed to console)**  
 For each claim extraction method (*FHuo* and *FSong*):  
@@ -92,7 +92,7 @@ For each claim extraction method (*FHuo* and *FSong*):
 Estimates the prevalence of **check-worthy (CW) claims** across the 3,000 sampled conversations, using different CW classifiers (Hassan, Majer, Intersection, Union) applied to both FHuo and FSong claim extraction methods.
 
 **Input**  
-- `Annotations/run_analysis.csv` (utterance-level annotations with claim arrays)
+- `Annotations/analysis.csv` (utterance-level annotations with claim arrays)
 
 **Output (printed to console)**  
 For each method combination  

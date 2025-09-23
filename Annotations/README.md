@@ -6,9 +6,9 @@ This directory contains claim extraction results, human annotations, and check-w
 
 - [Claim Extraction and Check-Worthiness Methods Overview](#claim-extraction-and-check-worthiness-methods-overview)
 - [Dataset Files](#dataset-files)
-  - [`run_analysis.csv`](#run_analysiscsv)
-  - [`Human_Annotation.csv`](#human_annotationcsv)
-  - [`run_factual_claim_extraction.csv`](#run_factual_claim_extractioncsv)
+  - [`analysis.csv`](#run_analysiscsv)
+  - [`human_annotations.csv`](#human_annotationcsv)
+  - [`claims.csv`](#run_factual_claim_extractioncsv)
 
 
 ## Dataset Files
@@ -18,7 +18,7 @@ This section describes the annotation files included in this directory.
 Note that, as described in the root README, our resource builds on prior work using [Huo et al., 2023](https://dl.acm.org/doi/fullHtml/10.1145/3624918.3625336/) and [Song et al., 2024](https://aclanthology.org/2024.findings-emnlp.552/) for claim extraction, and [Hassan et al., 2015](https://dl.acm.org/doi/10.1145/2806416.2806652) and [Majer et al., 2024](https://aclanthology.org/2024.fever-1.27/) for check-worthiness classification. See [**`Generation/README.md`**](../Generation/README.md) for detailed method descriptions.
 
 
-### `run_analysis.csv`
+### `analysis.csv`
 
 **Purpose**  
 This file contains the **utterance-level results** used for check-worthiness analysis.  
@@ -48,7 +48,7 @@ Each row corresponds to a single agent utterance within a conversation.
 - `*_Fact_Num`: Number of check-worthy facts identified by each method  
 - `*_Fact_Total`: Total number of facts extracted by each method
 
-### `Human_Annotation.csv`
+### `human_annotations.csv`
 
 **Purpose**  
 This file contains **200 human-annotated claims** used for inter-annotator agreement analysis and evaluation of automatic check-worthiness classifiers.
@@ -76,7 +76,7 @@ This file contains **200 human-annotated claims** used for inter-annotator agree
 - `Intersection`: TRUE if both Hassan and Majer classifiers predict CW  
 - `Union`: TRUE if either Hassan or Majer classifier predicts CW
 
-### `run_factual_claim_extraction.csv`
+### `claims.csv`
 
 **Purpose**  
 This file contains the **full set of extracted factual claims** from the 3k sampled conversations.  
@@ -91,7 +91,7 @@ Each row corresponds to a **single claim** linked to its originating agent utter
 - `Majer`: Majer check-worthiness classifier output (True/False) 
 
 **Notes**
-- This file operates at the **claim level** (one row per claim), unlike `run_analysis.csv`, which is **utterance-level**.  
+- This file operates at the **claim level** (one row per claim), unlike `analysis.csv`, which is **utterance-level**.  
 - Totals:  
     - **FHuo** extraction: **~31,108** claims  
     - **FSong** extraction: **~90,797** claims   
