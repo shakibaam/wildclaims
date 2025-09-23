@@ -43,10 +43,20 @@ Together, these files enable replication of utterance-level and claim-level stat
 👉 For detailed schema and column descriptions, see [`Annotations/README.md`](Annotations/README.md).
 
 ## WildClaims Statistics
-<div align="left">
-    <img src="Images/Statistics.png" alt="WildClaims Statistics" />
-</div>
 
+**Table: General statistics of the WILDCLAIMS dataset. CW represents check-worthiness.**
+| Statistic | Value |
+| :--- | :--- |
+| # Conversations | 3,000 |
+| Single/multi-turn ratio | 57% : 43% |
+| # Utterances | 15,174 |
+| # System utterances | 7,587 |
+| Avg. utterances per conversation | 2.52 |
+| Avg. words per user utterance | 95.70 |
+| Avg. words per system utterance | 219.24 |
+| # Total extracted factual claims | 121,905 |
+| # Automatic CW annotations | 243,810 |
+| # Manual CW annotations | 200 |
 
 ## Data Generation Pipeline
 
