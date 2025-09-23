@@ -1,6 +1,6 @@
-# WildClaims
+# <div align="center"><img src="Images/icon.png" alt="WildClaims icon" width="30" /> WildClaims: Information Access Conversations in the Wild(Chat)<div>
 
-<div align="left">
+<div align="center">
     <a href="https://arxiv.org/abs/2509.17442" target="_blank"><img src=https://img.shields.io/badge/arXiv-b5212f.svg?logo=arxiv></a>
     <a href="https://opendatacommons.org/licenses/by/1-0/">
         <img alt="License" src="https://img.shields.io/badge/License-ODC--BY--1.0-blue?style=flat">
@@ -43,8 +43,9 @@ Together, these files enable replication of utterance-level and claim-level stat
 👉 For detailed schema and column descriptions, see [`Annotations/README.md`](Annotations/README.md).
 
 ## WildClaims Statistics
-![Statistics](https://github.com/shakibaam/wildclaims/blob/main/Statistics.png?raw=true)
-
+<div align="left">
+    <img src="Images/Statistics.png" alt="WildClaims Statistics" />
+</div>
 
 
 ## Data Generation Pipeline
