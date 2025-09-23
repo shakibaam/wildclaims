@@ -16,7 +16,7 @@ from openai_batch_utils import submit_openai_batch, get_batch_statuses_from_meta
 
 
 def make_claim_batch_request_file(
-    input_csv_path, output_jsonl_path, prompt_mode='Major', model_name="gpt-4.1-2025-04-14"
+    input_csv_path, output_jsonl_path, prompt_mode='Majer', model_name="gpt-4.1-2025-04-14"
 ):
     """
     Creates a batch request file for SIQing claims for OpenAI batch API.
@@ -37,7 +37,7 @@ def make_claim_batch_request_file(
             statement_index = str(row["Statement_Index"]).strip() if "Statement_Index" in row else ""
             if not claim or not context_str or not conversation_hash or not statement_index:
                 continue
-            if prompt_mode == "Major":
+            if prompt_mode == "Majer":
                 prompt = (
                     "Classify the extracted claim from the conversation between a human and a language model into one of the following categories:\n"
                     "- NFS: Non-Factual Sentence\n"
@@ -83,7 +83,7 @@ def add_CW_predictions_to_csv(
     original_csv_path: str,
     batch_results_jsonl_path: str,
     output_csv_path: str,
-    new_column_name: str = "Major"
+    new_column_name: str = "Majer"
 ):
     """
     Maps OpenAI batch results from a JSONL file to the original CSV using conversation_hash and Statement_Index,
@@ -131,8 +131,8 @@ def main():
     parser.add_argument('--input_csv', type=str, required=True, help='Input CSV file (exploded claims)')
     parser.add_argument('--output_dir', type=str, required=False, help='Output directory for all results (defaults to input CSV directory)')
     parser.add_argument('--model_name', type=str, default='gpt-4.1-2025-04-14', help='OpenAI model name (default: gpt-4.1-2025-04-14)')
-    parser.add_argument('--prompt_mode', type=str, default='Major', choices=['Major', 'Hassan'], help='Prompt mode (default: Major)')
-    parser.add_argument('--column_name', type=str, default='Major', help='Column name for predictions in output CSV (default: Major)')
+    parser.add_argument('--prompt_mode', type=str, default='Majer', choices=['Majer', 'Hassan'], help='Prompt mode (default: Majer)')
+    parser.add_argument('--column_name', type=str, default='Majer', help='Column name for predictions in output CSV (default: Majer)')
     args = parser.parse_args()
 
     # Use input CSV directory as default output directory if not specified

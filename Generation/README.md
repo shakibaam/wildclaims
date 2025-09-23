@@ -8,7 +8,7 @@ The summary of each script is as follows:
 - `task_classification.py`: Classifies user utterances into high-level task categories like information seeking, creative writing, reasoning, etc.
 - `FHuo_method.py`: Extracts factual statements from agent utterances using the FHuo method via OpenAI Batch API.
 - `FSong.py`: End-to-end pipeline running FSong claim extraction, mapping results back to CSV, and expanding claims.
-- `CW.py`: Classifies extracted factual statements into check-worthiness categories using Major or Hassan prompt variants.
+- `CW.py`: Classifies extracted factual statements into check-worthiness categories using the Majer or Hassan prompt variants.
 
 ⚠️ **WARNING**: Running these reproduction scripts may cost ~$1,000 in OpenAI API charges! ⚠️
 
@@ -40,13 +40,13 @@ We use the following methods, as described in the paper:
   [[Paper link]](https://dl.acm.org/doi/fullHtml/10.1145/3624918.3625336/)  
 
 - **FSong (Song et al. 2024)** — Extracts only *verifiable* factual claims. Produces broader coverage, yielding nearly 3× more claims than FHuo.  
-  [[Paper link]](https://aclanthology.org/2024.findings-emnlp.552//)  
+  [[Paper link]](https://aclanthology.org/2024.findings-emnlp.552/)  
 
 - **Hassan (Hassan et al. 2015)** — one of the earliest check-worthiness detection approaches, originally based on crowd annotation guidelines. In our work, we adapted it into an LLM prompt to classify claims as check-worthy or not.  
   [[Paper link]](https://dl.acm.org/doi/10.1145/2806416.2806652)  
 
 - **Majer (Majer & Šnajder 2024)** — A recent check-worthiness detection method, using an effective LLM prompt designed to identify both factual and check-worthy factual claims.  
-  [[Paper link]](https://aclanthology.org/2024.fever-1.27//)  
+  [[Paper link]](https://aclanthology.org/2024.fever-1.27/)  
 
 These methods are combined in different ways (e.g., intersection, union) to estimate the prevalence of check-worthy claims and to evaluate classifier effectiveness (See Section 4.1 of the paper).
 
@@ -214,7 +214,7 @@ python FSong.py \
 Classifies extracted factual statements into **check-worthiness categories** using OpenAI batch inference.  
 Two prompt variants are supported:  
 
-- **Major**: Classifies into `NFS` (Non-Factual Sentence), `UFS` (Unimportant Factual Sentence), or `CFS` (Check-worthy Factual Sentence).  
+- **Majer**: Classifies into `NFS` (Non-Factual Sentence), `UFS` (Unimportant Factual Sentence), or `CFS` (Check-worthy Factual Sentence).  
 - **Hassan**: A question-driven formulation asking whether the user would care if the claim were true or false, producing the same three labels.
 
 Note that while the original paper uses three labels, for our analysis we binarize them into **Check-Worthy** (`CFS`) vs. **Not Check-Worthy** (`NFS` + `UFS`).
@@ -230,7 +230,7 @@ Note that while the original paper uses three labels, for our analysis we binari
 
 3. **Mapping Predictions**  
    - Aligns results back into the CSV.  
-   - Adds a new column with classifier predictions (default: `Major`, or user-specified).
+   - Adds a new column with classifier predictions (default: `Majer`, or user-specified).
 
 **How to Run**
 ```bash
@@ -238,5 +238,5 @@ python CW.py \
   --input_csv path/to/input.csv \
   --output_dir outputs/CW \
   --model_name gpt-4.1-2025-04-14 \
-  --prompt_variant Major
+  --prompt_variant Majer
 ```

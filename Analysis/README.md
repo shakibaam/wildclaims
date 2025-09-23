@@ -1,3 +1,5 @@
+# Analysis Scripts
+
 ### `Statistics_3k_Conversation.py`
 
 **Purpose**  
@@ -106,7 +108,7 @@ For each method combination
 
 For detailed instructions on running the analysis scripts, please see the [Scripts README](Scripts/README.md).
 
-Each script can be run independently to reproduce the analyses reported in the paper. Make sure to install any required dependencies by running:
+Each script can be run independently to reproduce the analyzes reported in the paper. Make sure to install any required dependencies by running:
 
 ```bash
 pip install -r requirements.txt

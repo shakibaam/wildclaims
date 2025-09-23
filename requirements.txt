@@ -1,4 +1,4 @@
-# Python dependencies for Wildchat Paper analysis scripts
+# Python dependencies for WildClaims paper analysis scripts
 # 
 # All scripts use only Python standard library modules:
 # - csv (for reading CSV files)
