@@ -1,5 +1,26 @@
-### `Annotations/run_analysis.csv`
+# WildClaims Annotations
 
+This directory contains claim extraction results, human annotations, and check-worthiness classifications from 3,000 conversations for evaluating implicit information access patterns.
+
+**Table of Contents**
+
+- [Claim Extraction and Check-Worthiness Methods Overview](#claim-extraction-and-check-worthiness-methods-overview)
+- [Dataset Files](#dataset-files)
+  - [`run_analysis.csv`](#run_analysiscsv)
+  - [`Human_Annotation.csv`](#human_annotationcsv)
+  - [`run_factual_claim_extraction.csv`](#run_factual_claim_extractioncsv)
+
+
+## Dataset Files
+
+This section describes the annotation files included in this directory.
+
+Note that, as described in the root README, our resource builds on prior work using [Huo et al., 2023](https://dl.acm.org/doi/fullHtml/10.1145/3624918.3625336/) and [Song et al., 2024](https://aclanthology.org/2024.findings-emnlp.552/) for claim extraction, and [Hassan et al., 2015](https://dl.acm.org/doi/10.1145/2806416.2806652) and [Majer et al., 2024](https://aclanthology.org/2024.fever-1.27/) for check-worthiness classification. See [**`Generation/README.md`**](../Generation/README.md) for detailed method descriptions.
+
+
+### `run_analysis.csv`
+
+**Purpose**  
 This file contains the **utterance-level results** used for check-worthiness analysis.  
 Each row corresponds to a single agent utterance within a conversation.
 
@@ -7,8 +28,8 @@ Each row corresponds to a single agent utterance within a conversation.
 
 - `Conversation_Hash`: Unique identifier for each conversation  
 - `Turn_Num`: Turn number within the conversation (1, 2, 3, …)  
-- `Corresponding_User_Question`: The user’s question/input for this turn  
-- `Selected_Agent_Utterance`: The agent’s response/utterance for this turn  
+- `Corresponding_User_Question`: The user's question/input for this turn  
+- `Selected_Agent_Utterance`: The agent's response/utterance for this turn  
 - `Selected_Agent_Column`: Column identifier (e.g., *Utterance-1 (Agent)*)  
 - `Task_Classification`: Task type (e.g., *Information seeking*, *Creative Writing*, …)  
 - `Use`: Usage flag (TRUE/FALSE)  
@@ -27,9 +48,9 @@ Each row corresponds to a single agent utterance within a conversation.
 - `*_Fact_Num`: Number of check-worthy facts identified by each method  
 - `*_Fact_Total`: Total number of facts extracted by each method
 
+### `Human_Annotation.csv`
 
-### `Annotations/Human_Annotation.csv`
-
+**Purpose**  
 This file contains **200 human-annotated claims** used for inter-annotator agreement analysis and evaluation of automatic check-worthiness classifiers.
 
 **Basic Information**
@@ -55,15 +76,14 @@ This file contains **200 human-annotated claims** used for inter-annotator agree
 - `Intersection`: TRUE if both Hassan and Majer classifiers predict CW  
 - `Union`: TRUE if either Hassan or Majer classifier predicts CW
 
+### `run_factual_claim_extraction.csv`
 
-
-### `Annotations/run_factual_claim_extraction.csv`
-
+**Purpose**  
 This file contains the **full set of extracted factual claims** from the 3k sampled conversations.  
 Each row corresponds to a **single claim** linked to its originating agent utterance.
 
 **Columns**
-- `Selected_Agent_Utterance`: The agent’s utterance from which the claim was extracted  
+- `Selected_Agent_Utterance`: The agent's utterance from which the claim was extracted  
 - `Conversation_Hash`: Unique identifier for the conversation  
 - `Claim_Extr_Method`: Claim extraction method used (*FHuo* or *FSong*)  
 - `Individual_Statement`: The extracted claim text  
@@ -75,4 +95,4 @@ Each row corresponds to a **single claim** linked to its originating agent utter
 - Totals:  
     - **FHuo** extraction: **~31,108** claims  
     - **FSong** extraction: **~90,797** claims   
-- These counts align with the paper’s reported results and can be used to replicate extraction statistics.
+- These counts align with the paper's reported results and can be used to replicate extraction statistics.
