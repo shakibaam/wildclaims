@@ -1,4 +1,4 @@
-# <div align="center"><img src="Images/icon.png" alt="WildClaims icon" width="30" /> WildClaims: Information Access Conversations in the Wild(Chat)<div>
+# <div align="center"><img src="Images/icon.png" alt="WildClaims icon" width="30" /> WildClaims: Information Access Conversations<br>in the Wild(Chat)<div>
 
 <div align="center">
     <a href="https://arxiv.org/abs/2509.17442" target="_blank"><img src=https://img.shields.io/badge/arXiv-b5212f.svg?logo=arxiv></a>
