@@ -10,10 +10,10 @@
 
 This is the repo for our paper: **[WildClaims: Information Access Conversations in the Wild(Chat)](https://arxiv.org/abs/2509.17442)**.
 The repository contains:  
-- The [**`WildClaims dataset`**](Annotations/)  with extracted factual claims and human annotations.  
+- The [**`WildClaims dataset`**](Annotations/) with extracted factual claims and human annotations.  
 - The [**`data generation pipeline`**](Generation/) for preprocessing, filtering, claim extraction, and check-worthiness classification.  
-- The [**`Analysis Scripts`**](Analysis/) used to reproduce the statistics and evaluation results reported in the paper.
-- The [**`Prompts`**](Prompts/) used to generate the dataset via LLM-based claim extraction and check-worthiness classification. 
+- The [**`analysis scripts`**](Analysis/) used to reproduce the statistics and evaluation results reported in the paper.
+- The [**`prompts`**](Prompts/) used to generate the dataset via LLM-based claim extraction and check-worthiness classification. 
 
 
 ## What is WildClaims?
