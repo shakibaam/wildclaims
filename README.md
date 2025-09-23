@@ -1,6 +1,14 @@
 # WildClaims
 
-This is the repo for our paper: **WildClaims: Information Access Conversations in the Wild(Chat)**.  
+<div align="left">
+    <a href="https://arxiv.org/abs/2509.17442" target="_blank"><img src=https://img.shields.io/badge/arXiv-b5212f.svg?logo=arxiv></a>
+    <a href="https://opendatacommons.org/licenses/by/1-0/">
+        <img alt="License" src="https://img.shields.io/badge/License-ODC--BY--1.0-blue?style=flat">
+    </a>
+</div>
+
+
+This is the repo for our paper: **[WildClaims: Information Access Conversations in the Wild(Chat)](https://arxiv.org/abs/2509.17442)**.
 The repository contains:  
 - The [**`WildClaims dataset`**](Annotations/)  with extracted factual claims and human annotations.  
 - The [**`data generation pipeline`**](Generation/) for preprocessing, filtering, claim extraction, and check-worthiness classification.  
@@ -91,12 +99,22 @@ The directory [`Analysis`](Analaysis/) contains Python scripts used to analyze t
 
 ## License
 
-WildClaims, following WildChat, is currently released under the [ODC-By 1.0](https://opendatacommons.org/licenses/by/1-0/) license, and by using WildClaims, you are agreeing to its usage terms.
+WildClaims is currently released under the [ODC-By 1.0](https://opendatacommons.org/licenses/by/1-0/) license, following WildChat, and by using WildClaims you are agreeing to its usage terms.
 
 
-<!-- ## Citation
+## Citation
 
-TBA -->
+```
+@misc{Joko:2025:WildClaims,
+      title={WildClaims: Information Access Conversations in the Wild(Chat)}, 
+      author={Hideaki Joko and Shakiba Amirshahi and Charles L. A. Clarke and Faegheh Hasibi},
+      year={2025},
+      eprint={2509.17442},
+      archivePrefix={arXiv},
+      primaryClass={cs.IR},
+      url={https://arxiv.org/abs/2509.17442}, 
+}
+```
 
 ## Contact
 
