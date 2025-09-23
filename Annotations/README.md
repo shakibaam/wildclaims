@@ -2,15 +2,6 @@
 
 This directory contains claim extraction results, human annotations, and check-worthiness classifications from 3,000 conversations for evaluating implicit information access patterns.
 
-**Table of Contents**
-
-- [Claim Extraction and Check-Worthiness Methods Overview](#claim-extraction-and-check-worthiness-methods-overview)
-- [Dataset Files](#dataset-files)
-  - [`analysis.csv`](#run_analysiscsv)
-  - [`human_annotations.csv`](#human_annotationcsv)
-  - [`claims.csv`](#run_factual_claim_extractioncsv)
-
-
 ## Dataset Files
 
 This section describes the annotation files included in this directory.
