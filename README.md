@@ -44,7 +44,7 @@ Together, these files enable replication of utterance-level and claim-level stat
 
 ## WildClaims Statistics
 
-**Table: General statistics of the WILDCLAIMS dataset. CW represents check-worthiness.**
+**Table: General statistics of the WILDCLAIMS dataset.**
 | Statistic | Value |
 | :--- | :--- |
 | # Conversations | 3,000 |
@@ -55,8 +55,8 @@ Together, these files enable replication of utterance-level and claim-level stat
 | Avg. words per user utterance | 95.70 |
 | Avg. words per system utterance | 219.24 |
 | # Total extracted factual claims | 121,905 |
-| # Automatic CW annotations | 243,810 |
-| # Manual CW annotations | 200 |
+| # Automatic check-worthiness annotations | 243,810 |
+| # Manual check-worthiness annotations | 200 |
 
 ## Data Generation Pipeline
 
