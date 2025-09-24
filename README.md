@@ -129,4 +129,4 @@ WildClaims is currently released under the [ODC-By 1.0](https://opendatacommons.
 
 ## Contact
 
-If you have any questions, please contact Shakiba Amirshahi or Hideaki Joko hideaki.joko@ru.nl
+If you have any questions, please contact Shakiba Amirshahi s2amirsh@uwaterloo.ca or Hideaki Joko hideaki.joko@ru.nl
