@@ -23,7 +23,7 @@ The repository contains:
 
 ## Data Release  
 
-The directory [`annotations`](annotations/) contains utterance-level results, human annotations, and full claim extractions used in our check-worthiness analysis.
+The directory [`annotations/`](annotations/) contains utterance-level results, human annotations, and full claim extractions used in our check-worthiness analysis.
 
 This resource builds on prior work in **claim extraction** and **check-worthiness detection**.
 Specifically, we use [Huo et al., 2023](https://dl.acm.org/doi/fullHtml/10.1145/3624918.3625336/) and [Song et al., 2024](https://aclanthology.org/2024.findings-emnlp.552/) for claim extraction, and [Hassan et al., 2015](https://dl.acm.org/doi/10.1145/2806416.2806652) and [Majer et al., 2024](https://aclanthology.org/2024.fever-1.27/) for check-worthiness classification. See [**`generation/README.md`**](generation/README.md) for more details.
@@ -86,7 +86,7 @@ The [`generation/`](./generation/) directory contains scripts for preparing, lab
 
 ## Analysis  
 
-The directory [`analysis`](analysis/) contains Python scripts used to analyze the annotations and reproduce results reported in the paper.  
+The directory [`analysis/`](analysis/) contains Python scripts used to analyze the annotations and reproduce results reported in the paper.  
 
 - [**`statistics_3k_conversation.py`**](analysis/statistics_3k_conversation.py)  
   Generates descriptive statistics for the 3,000 sampled conversations. Outputs counts of utterances, unique conversations, turn distributions, average lengths of user questions and agent utterances, and task classification distributions.  
