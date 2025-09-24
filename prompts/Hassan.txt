@@ -1,8 +1,3 @@
-Sentence:
-<sentence>
-
-Context:
-{Conversation_History}
 
 Question: Will the user be interested in knowing whether (part of) this sentence is true or false?
 - NFS: There is no factual claim in this sentence.
@@ -10,3 +5,8 @@ Question: Will the user be interested in knowing whether (part of) this sentence
 - CFS: There is an important factual claim.
 
 Respond with only one label: NFS, UFS, or CFS. Do not provide any explanation.
+Sentence:
+{factual_claim}
+
+Context: 
+{conversation_history}
