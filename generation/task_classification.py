@@ -106,18 +106,25 @@ def make_task_classification_batch_request_file(
                 continue
             
             prompt = (
-                "Classify the following user utterance from a conversation with an AI assistant into one of these categories:\n\n"
-                "- Information seeking: User is asking for factual information, explanations, or help with understanding something\n"
-                "- Creative Writing: User is asking for creative content like stories, poems, scripts, or creative ideas\n"
-                "- Editing: User is asking for help with editing, revising, or improving existing text\n"
-                "- Reasoning: User is asking for logical analysis, problem-solving, or step-by-step thinking\n"
-                "- Brainstorming: User is asking for ideas, suggestions, or exploring possibilities\n"
-                "- Planning: User is asking for help with planning, organizing, or structuring something\n"
-                "- Role playing: User is engaging in role-play, simulation, or acting as someone else\n"
-                "- Others: Any other type of interaction that doesn't fit the above categories\n\n"
-                "Respond with only the category name. Do not provide any explanation.\n\n"
-                f"User utterance: {user_utterance}\n\n"
-                f"Conversation context: {context_str}"
+        "You are given a conversation context and a user turn. Classify the user turn into one of the following categories without additional explanation:\n"
+        "• Information seeking - Users ask for specific information or facts about various topics.\n"
+        "• Reasoning - Queries require logical thinking, problem-solving, or processing of complex ideas.\n"
+        "• Planning - Users need assistance in creating plans or strategies for activities and projects.\n"
+        "• Editing - Involves editing, rephrasing, proofreading, or other tasks related to the composition of general written content.\n"
+        "• Coding & Debugging - Users seek help with writing, reviewing, or fixing code in programming.\n"
+        "• Math - Queries related to mathematical concepts, problems, and calculations.\n"
+        "• Role playing - Users engage in scenarios requiring ChatGPT to adopt a character or persona.\n"
+        "• Data Analysis - Requests involve interpreting data, statistics, or performing analytical tasks.\n"
+        "• Creative Writing - Users seek assistance with crafting stories, poems, or other creative texts.\n"
+        "• Advice seeking - Users ask for recommendations or guidance on various personal or professional issues.\n"
+        "• Brainstorming - Involves generating ideas, creative thinking, or exploring possibilities.\n"
+        "• Others - Any queries that do not fit into the above categories or are of a miscellaneous nature.\n"
+        "User turn:\n"
+        "{user_turn}\n"
+        "Context:\n"
+        "{context}\n"
+        "Classification for user turn:\n"
+        "{classification}"
             )
             
             request_obj = {
