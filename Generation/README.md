@@ -4,11 +4,11 @@ This directory contains the pipeline for preprocessing WildChat conversations, f
 
 The summary of each script is as follows:
 - `labeling_math_and_code.py`: Labels conversations as Math, Coding, or Others to filter non-relevant domains before claim extraction.
-- `Preprocess_Files_For_Pipeline.py`: Expands conversations into utterance-level rows and generates context windows for downstream claim extraction.
+- `preprocess_files_for_pipeline.py`: Expands conversations into utterance-level rows and generates context windows for downstream claim extraction.
 - `task_classification.py`: Classifies user utterances into high-level task categories like information seeking, creative writing, reasoning, etc.
-- `FHuo_method.py`: Extracts factual statements from agent utterances using the FHuo method via OpenAI Batch API.
-- `FSong.py`: End-to-end pipeline running FSong claim extraction, mapping results back to CSV, and expanding claims.
-- `CW.py`: Classifies extracted factual statements into check-worthiness categories using the Majer or Hassan prompt variants.
+- `f_huo_method.py`: Extracts factual statements from agent utterances using the FHuo method via OpenAI Batch API.
+- `f_song.py`: End-to-end pipeline running FSong claim extraction, mapping results back to CSV, and expanding claims.
+- `cw.py`: Classifies extracted factual statements into check-worthiness categories using the Majer or Hassan prompt variants.
 
 ⚠️ **WARNING**: Running these reproduction scripts may cost ~$1,000 in OpenAI API charges! ⚠️
 
@@ -17,13 +17,13 @@ The summary of each script is as follows:
 - [Claim Extraction and Check-Worthiness Methods Overview](#claim-extraction-and-check-worthiness-methods-overview)
 - [Preprocessing](#preprocessing)
   - [`labeling_math_and_code.py`](#labeling_math_and_codepy)
-  - [`Preprocess_Files_For_Pipeline.py`](#preprocess_files_for_pipelinepy)
+  - [`preprocess_files_for_pipeline.py`](#preprocess_files_for_pipelinepy)
   - [`task_classification.py`](#task_classificationpy)
 - [Claim Extraction](#claim-extraction)
-  - [`FHuo_method.py`](#fhuo_methodpy)
-  - [`FSong.py`](#fsongpy)
+  - [`f_huo_method.py`](#f_huo_methodpy)
+  - [`f_song.py`](#f_songpy)
 - [Check-Worthiness Classification](#check-worthiness-classification)
-  - [`CW.py`](#cwpy)
+  - [`cw.py`](#cwpy)
 
 ## Setting OpenAI API Key
 Before running any pipeline scripts, set your OpenAI API key in your environment. For example, in a Unix-like shell, you can run:
@@ -90,7 +90,7 @@ python labeling_math_and_code.py \
 ```
 
 
-### `Preprocess_Files_For_Pipeline.py`
+### `preprocess_files_for_pipeline.py`
 
 **Purpose**  
 This script runs the **preprocessing pipeline** to prepare system utterances (Agent/System) for downstream **claim extraction**.  
@@ -118,7 +118,7 @@ It takes in raw conversation CSV files, expands them into utterance-level rows, 
 
 **How to Run**
 ```bash
-python Preprocess_Files_For_Pipeline.py \
+python preprocess_files_for_pipeline.py \
   --input_csv path/to/input.csv \
   --output_dir outputs/preprocessing
 ```
@@ -147,7 +147,7 @@ python task_classification.py \
 
 ## Claim Extraction
 
-### `FHuo_method.py`
+### `f_huo_method.py`
 
 2. **Mapping Results** 
    - Maps OpenAI batch results back to the CSV.  
@@ -159,14 +159,14 @@ python task_classification.py \
 
 **How to Run**
 ```bash
-python FHuo_method.py \
+python f_huo_method.py \
   --input_csv path/to/input.csv \
   --output_dir outputs/FHuo \
   --model_name gpt-4.1-2025-04-14
 ``` 
 
 
-### `FSong.py`
+### `f_song.py`
 
 **Purpose**  
 End-to-end pipeline to (1) generate per-row JSONL requests from a CSV, (2) run **FSong** claim extraction on each request, (3) map extracted claims back to the CSV, and (4) expand the list of claims into one-row-per-claim.
@@ -197,7 +197,7 @@ Before running this pipeline, you need to clone the FSong repository and set up 
 
 **How to Run**
 ```bash
-python FSong.py \
+python f_song.py \
   --input_csv path/to/preprocessed_unified.csv \
   --output_dir outputs/FSong \
   --model_name gpt-4 \
@@ -208,7 +208,7 @@ python FSong.py \
 
 ## Check-Worthiness Classification
 
-### `CW.py`
+### `cw.py`
 
 **Purpose**  
 Classifies extracted factual statements into **check-worthiness categories** using OpenAI batch inference.  
@@ -234,7 +234,7 @@ Note that while the original paper uses three labels, for our analysis we binari
 
 **How to Run**
 ```bash
-python CW.py \
+python cw.py \
   --input_csv path/to/input.csv \
   --output_dir outputs/CW \
   --model_name gpt-4.1-2025-04-14 \

@@ -26,7 +26,7 @@ def calculate_kappa(observed_agreement, expected_agreement):
     return (observed_agreement - expected_agreement) / (1 - expected_agreement)
 
 def main():
-    csv_file_path = '../Annotations/analysis.csv'
+    csv_file_path = '../annotations/analysis.csv'
     
     print("Loading data from analysis.csv...")
     

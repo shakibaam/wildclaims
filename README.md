@@ -1,4 +1,4 @@
-# <div align="center"><img src="Images/icon.png" alt="WildClaims icon" width="30" /> WildClaims: Information Access Conversations<br>in the Wild(Chat)<div>
+# <div align="center"><img src="images/icon.png" alt="WildClaims icon" width="30" /> WildClaims: Information Access Conversations<br>in the Wild(Chat)<div>
 
 <div align="center">
     <a href="https://arxiv.org/abs/2509.17442" target="_blank"><img src=https://img.shields.io/badge/arXiv-b5212f.svg?logo=arxiv></a>
@@ -10,10 +10,10 @@
 
 This is the repo for our paper: **[WildClaims: Information Access Conversations in the Wild(Chat)](https://arxiv.org/abs/2509.17442)**.
 The repository contains:  
-- The [**`WildClaims dataset`**](Annotations/) with extracted factual claims and human annotations.  
-- The [**`data generation pipeline`**](Generation/) for preprocessing, filtering, claim extraction, and check-worthiness classification.  
-- The [**`analysis scripts`**](Analysis/) used to reproduce the statistics and evaluation results reported in the paper.
-- The [**`prompts`**](Prompts/) used to generate the dataset via LLM-based claim extraction and check-worthiness classification. 
+- The [**`WildClaims dataset`**](annotations/) with extracted factual claims and human annotations.  
+- The [**`data generation pipeline`**](generation/) for preprocessing, filtering, claim extraction, and check-worthiness classification.  
+- The [**`analysis scripts`**](analysis/) used to reproduce the statistics and evaluation results reported in the paper.
+- The [**`prompts`**](prompts/) used to generate the dataset via LLM-based claim extraction and check-worthiness classification. 
 
 
 ## What is WildClaims?
@@ -23,24 +23,24 @@ The repository contains:
 
 ## Data Release  
 
-The directory [`Annotations`](Annotations/) contains utterance-level results, human annotations, and full claim extractions used in our check-worthiness analysis.
+The directory [`annotations`](annotations/) contains utterance-level results, human annotations, and full claim extractions used in our check-worthiness analysis.
 
 This resource builds on prior work in **claim extraction** and **check-worthiness detection**.
-Specifically, we use [Huo et al., 2023](https://dl.acm.org/doi/fullHtml/10.1145/3624918.3625336/) and [Song et al., 2024](https://aclanthology.org/2024.findings-emnlp.552/) for claim extraction, and [Hassan et al., 2015](https://dl.acm.org/doi/10.1145/2806416.2806652) and [Majer et al., 2024](https://aclanthology.org/2024.fever-1.27/) for check-worthiness classification. See [**`Generation/README.md`**](Generation/README.md) for more details.
+Specifically, we use [Huo et al., 2023](https://dl.acm.org/doi/fullHtml/10.1145/3624918.3625336/) and [Song et al., 2024](https://aclanthology.org/2024.findings-emnlp.552/) for claim extraction, and [Hassan et al., 2015](https://dl.acm.org/doi/10.1145/2806416.2806652) and [Majer et al., 2024](https://aclanthology.org/2024.fever-1.27/) for check-worthiness classification. See [**`generation/README.md`**](generation/README.md) for more details.
 
-- [**`claims.csv`**](Annotations/claims.csv)  
+- [**`claims.csv`**](annotations/claims.csv)  
   Full set of extracted factual claims (~31K with `FHuo`, ~91K with `FSong`). Each row corresponds to a claim linked to its source utterance (`Selected_Agent_Utterance`, `Conversation_Hash`, `Claim_Extr_Method`, `Individual_Statement`) with classifier outputs (`Hassan`, `Majer`). 
 
 
-- [**`human_annotations.csv`**](Annotations/human_annotations.csv)  
+- [**`human_annotations.csv`**](annotations/human_annotations.csv)  
   200 human-annotated claims for inter-annotator agreement and classifier evaluation. Includes annotator labels (`Human1_Annotation`, `Human2_Annotation`, `Check_Worthy`), binary CW flags (`Human1_CW`, `Human2_CW`, `CW_Tie`), agreement flags (`Human1_Human2_Agree`), and automatic classifier outputs (`Majer`, `Hassan`, `Intersection`, `Union`).  
 
-- [**`analysis.csv`**](Annotations/analysis.csv)  
+- [**`analysis.csv`**](annotations/analysis.csv)  
   Utterance-level results for ~3k sampled conversations. Each row corresponds to an agent utterance, with metadata (`Conversation_Hash`, `Turn_Num`, `Corresponding_User_Question`, `Selected_Agent_Utterance`, `Task_Classification`, `Use`) and multiple check-worthiness outputs (`Hassan`, `Majer`, `Intersection`, `Union`) plus fact counts (`*_Fact_Num`, `*_Fact_Total`).  
 
 Together, these files enable replication of utterance-level and claim-level statistics, as well as evaluation of human vs. automatic check-worthiness classification.  
 
-👉 For detailed schema and column descriptions, see [`Annotations/README.md`](Annotations/README.md).
+👉 For detailed schema and column descriptions, see [`annotations/README.md`](annotations/README.md).
 
 ## WildClaims Statistics
 
@@ -60,50 +60,50 @@ Together, these files enable replication of utterance-level and claim-level stat
 
 ## Data Generation Pipeline
 
-The [`Generation/`](./Generation/) directory contains scripts for preparing, labeling, and extracting claims from WildChat conversations before running check-worthiness analysis.  
+The [`generation/`](./generation/) directory contains scripts for preparing, labeling, and extracting claims from WildChat conversations before running check-worthiness analysis.  
 
 **Workflow Summary:**
-1. **Preprocessing** [**`Preprocess_Files_For_Pipeline.py`**](Generation/Preprocess_Files_For_Pipeline.py)  
+1. **Preprocessing** [**`preprocess_files_for_pipeline.py`**](generation/preprocess_files_for_pipeline.py)  
    - Explodes conversations into utterance-level rows.  
    - Generates context windows for each system utterance.  
 
-2. **Filtering Math & Code** [**`labeling_math_and_code.py`**](Generation/labeling_math_and_code.py)   
+2. **Filtering Math & Code** [**`labeling_math_and_code.py`**](generation/labeling_math_and_code.py)   
    - Labels conversations as *Math*, *Coding*, or *Others* to filter out non-relevant domains.  
 
-3. **Task Classification** [**`task_classification.py`**](Generation/task_classification.py)   
+3. **Task Classification** [**`task_classification.py`**](generation/task_classification.py)   
    - Categorizes user utterances into high-level task types (information seeking, creative writing, reasoning, etc.).  
 
 4. **Claim Extraction**  
-   - **FHuo Method** [**`FHuo_method.py`**](Generation/FHuo_method.py): Extracts factual statements from system responses via OpenAI Batch.  
-   - **FSong Method** [**`FSong_method.py`**](Generation/FSong_method.py): Generates JSONLs, runs FSong extraction, maps claims back, and explodes them into one-row-per-claim.  
+   - **FHuo Method** [**`f_huo_method.py`**](generation/f_huo_method.py): Extracts factual statements from system responses via OpenAI Batch.  
+   - **FSong Method** [**`f_song.py`**](generation/f_song.py): Generates JSONLs, runs FSong extraction, maps claims back, and explodes them into one-row-per-claim.  
 
-5. **Check-Worthiness Classification** [**`CW.py`**](Generation/CW.py)  
+5. **Check-Worthiness Classification** [**`cw.py`**](generation/cw.py)  
    - Classifies factual statements; supports both *Majer* and *Hassan* prompt variants.  
 
-📂 **Details:** See the [Generation/README.md](./Generation/README.md) for complete pipeline descriptions, usage examples, and command-line arguments.
+📂 **Details:** See the [generation/README.md](./generation/README.md) for complete pipeline descriptions, usage examples, and command-line arguments.
 
 
 
 ## Analysis  
 
-The directory [`Analysis`](Analysis/) contains Python scripts used to analyze the annotations and reproduce results reported in the paper.  
+The directory [`analysis`](analysis/) contains Python scripts used to analyze the annotations and reproduce results reported in the paper.  
 
-- [**`Statistics_3k_Conversation.py`**](Analysis/Statistics_3k_Conversation.py)  
+- [**`statistics_3k_conversation.py`**](analysis/statistics_3k_conversation.py)  
   Generates descriptive statistics for the 3,000 sampled conversations. Outputs counts of utterances, unique conversations, turn distributions, average lengths of user questions and agent utterances, and task classification distributions.  
 
-- [**`Statistics_Fact_Claim_Extraction_3k.py`**](Analysis/Statistics_Fact_Claim_Extraction_3k.py)  
+- [**`statistics_fact_claim_extraction_3k.py`**](analysis/statistics_fact_claim_extraction_3k.py)  
   Computes statistics on factual claim extraction across the 3k conversations, comparing **FHuo** and **FSong** methods. Reports total claims, average claims per utterance/conversation, and coverage statistics.  
 
-- [**`Statistics_Human_Annotations.py`**](Analysis/Statistics_Human_Annotations.py)  
+- [**`statistics_human_annotations.py`**](analysis/statistics_human_annotations.py)  
   Analyzes the 200 human-annotated claims. Provides row counts per extraction method, percentages of TRUE labels (`Human1_CW`, `Human2_CW`, `Gold`), and inter-annotator agreement using Cohen’s κ.  
 
-- [**`Effectiveness_Automatic_Check_Worthiness.py`**](Analysis/Effectiveness_Automatic_Check_Worthiness.py)  
+- [**`effectiveness_automatic_check_worthiness.py`**](analysis/effectiveness_automatic_check_worthiness.py)  
   Evaluates automatic CW classifiers (`Hassan`, `Majer`, `Intersection`, `Union`) against the human-annotated gold labels. Reports Precision, Recall, F1-score, and Cohen’s κ for each extraction method.  
 
-- [**`Prevalence_Check_Worthy_3k.py`**](Analysis/Prevalence_Check_Worthy_3k.py)  
+- [**`prevalence_check_worthy_3k.py`**](analysis/prevalence_check_worthy_3k.py)  
   Estimates the prevalence of CW claims across the 3,000 sampled conversations. Reports percentages of CW claims, utterances with ≥1 CW claim, and conversations with ≥1 CW claim for all classifier–extraction combinations. 
 
-  For detailed instructions on running the analysis scripts, see the [Analysis README](Analysis/README.md). 
+  For detailed instructions on running the analysis scripts, see the [analysis README](analysis/README.md). 
 
 
 

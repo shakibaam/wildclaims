@@ -1,13 +1,13 @@
 # Analysis Scripts
 
-### `Statistics_3k_Conversation.py`
+### `statistics_3k_conversation.py`
 
 **Purpose**  
 Generates descriptive statistics for the 3,000 sampled conversations from the WildChat dataset.  
 This provides a high-level overview of conversation structure and task distribution.
 
 **Input**  
-- `Annotations/analysis.csv` (utterance-level annotations)
+- `annotations/analysis.csv` (utterance-level annotations)
 
 **Output (printed to console)**  
 - **#Utterances**: Total number of rows in the dataset  
@@ -21,14 +21,14 @@ This provides a high-level overview of conversation structure and task distribut
 
 
 
-### `Statistics_Fact_Claim_Extraction_3k.py`
+### `statistics_fact_claim_extraction_3k.py`
 
 **Purpose**  
 Computes statistics about factual claim extraction on the 3,000 sampled conversations, comparing the **FHuo** and **FSong** extraction methods.  
 Focuses on claim counts, averages, and coverage at both utterance and conversation levels.
 
 **Input**  
-- `Annotations/analysis.csv` (utterance-level annotations with claim arrays)
+- `annotations/analysis.csv` (utterance-level annotations with claim arrays)
 
 **Output (printed to console)**  
 - **Total number of extracted claims**  
@@ -46,14 +46,14 @@ Focuses on claim counts, averages, and coverage at both utterance and conversati
 
 
 
-### `Statistics_Human_Annotations.py`
+### `statistics_human_annotations.py`
 
 **Purpose**  
 Analyzes the **200 human-annotated claims** to measure inter-annotator agreement and compare human labels against automatic classifiers.  
 Provides per-method statistics for **FHuo** and **FSong** claim extraction.
 
 **Input**  
-- `Annotations/human_annotations.csv` (200 annotated claims)
+- `annotations/human_annotations.csv` (200 annotated claims)
 
 **Output (printed to console)**  
 - **Row counts per method**: Number of annotated claims for FHuo and FSong  
@@ -65,14 +65,14 @@ Provides per-method statistics for **FHuo** and **FSong** claim extraction.
   - Agreement between Human1 and Human2 (binary check-worthiness decisions)  
 
 
-### `Effectiveness_Automatic_Check_Worthiness.py`
+### `effectiveness_automatic_check_worthiness.py`
 
 **Purpose**  
 Evaluates the effectiveness of **automatic check-worthiness (CW) classifiers** against the human-annotated gold standard.  
 Reports standard evaluation metrics to benchmark the Hassan, Majer, Intersection, and Union of these methods.
 
 **Input**  
-- `Annotations/human_annotations.csv` (200 annotated claims)
+- `annotations/human_annotations.csv` (200 annotated claims)
 
 **Output (printed to console)**  
 For each claim extraction method (*FHuo* and *FSong*):  
@@ -86,13 +86,13 @@ For each claim extraction method (*FHuo* and *FSong*):
 
 
 
-### `Prevalence_Check_Worthy_3k.py`
+### `prevalence_check_worthy_3k.py`
 
 **Purpose**  
 Estimates the prevalence of **check-worthy (CW) claims** across the 3,000 sampled conversations, using different CW classifiers (Hassan, Majer, Intersection, Union) applied to both FHuo and FSong claim extraction methods.
 
 **Input**  
-- `Annotations/analysis.csv` (utterance-level annotations with claim arrays)
+- `annotations/analysis.csv` (utterance-level annotations with claim arrays)
 
 **Output (printed to console)**  
 For each method combination  
@@ -106,7 +106,7 @@ For each method combination
 
 ## Usage
 
-For detailed instructions on running the analysis scripts, please see the [Scripts README](Scripts/README.md).
+For detailed instructions on running the analysis scripts, please see the [root README](../README.md).
 
 Each script can be run independently to reproduce the analyzes reported in the paper. Make sure to install any required dependencies by running:
 

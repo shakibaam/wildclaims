@@ -29,7 +29,7 @@ def parse_array_string(array_str):
         return []
 
 def main():
-    csv_file_path = '../Annotations/analysis.csv'
+    csv_file_path = '../annotations/analysis.csv'
     
     print("Loading data from analysis.csv...")
     

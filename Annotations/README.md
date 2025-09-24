@@ -6,7 +6,7 @@ This directory contains claim extraction results, human annotations, and check-w
 
 This section describes the annotation files included in this directory.
 
-Note that, as described in the root README, our resource builds on prior work using [Huo et al., 2023](https://dl.acm.org/doi/fullHtml/10.1145/3624918.3625336/) and [Song et al., 2024](https://aclanthology.org/2024.findings-emnlp.552/) for claim extraction, and [Hassan et al., 2015](https://dl.acm.org/doi/10.1145/2806416.2806652) and [Majer et al., 2024](https://aclanthology.org/2024.fever-1.27/) for check-worthiness classification. See [**`Generation/README.md`**](../Generation/README.md) for detailed method descriptions.
+Note that, as described in the root README, our resource builds on prior work using [Huo et al., 2023](https://dl.acm.org/doi/fullHtml/10.1145/3624918.3625336/) and [Song et al., 2024](https://aclanthology.org/2024.findings-emnlp.552/) for claim extraction, and [Hassan et al., 2015](https://dl.acm.org/doi/10.1145/2806416.2806652) and [Majer et al., 2024](https://aclanthology.org/2024.fever-1.27/) for check-worthiness classification. See [**`generation/README.md`**](../generation/README.md) for detailed method descriptions.
 
 
 ### `analysis.csv`

@@ -21,7 +21,7 @@ def calculate_precision_recall_f1(true_positives, false_positives, false_negativ
     return precision, recall, f1
 
 def main():
-    csv_file_path = '../Annotations/human_annotations.csv'
+    csv_file_path = '../annotations/human_annotations.csv'
     
     print("Loading data from human_annotations.csv...")
     

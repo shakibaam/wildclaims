@@ -24,7 +24,7 @@ def main():
     total_rows = 0
     
     # Read the CSV file
-    with open('../Annotations/analysis.csv', 'r', encoding='utf-8') as file:
+    with open('../annotations/analysis.csv', 'r', encoding='utf-8') as file:
         reader = csv.DictReader(file)
         
         for row in reader:
