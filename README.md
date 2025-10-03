@@ -1,4 +1,4 @@
-# <div align="center"><img src="images/icon.png" alt="WildClaims icon" width="30" /> WildClaims: Information Access Conversations<br>in the Wild(Chat)<div>
+# <div align="center"><img src="images/icon.png" alt="WildClaims icon" width="30" /> WildClaims: Conversational Information Access<br>in the Wild(Chat)<div>
 
 <div align="center">
     <a href="https://arxiv.org/abs/2509.17442" target="_blank"><img src=https://img.shields.io/badge/arXiv-b5212f.svg?logo=arxiv></a>
@@ -8,7 +8,7 @@
 </div>
 
 
-This is the repo for our paper: **[WildClaims: Information Access Conversations in the Wild(Chat)](https://arxiv.org/abs/2509.17442)**.
+This is the repo for our paper: **[WildClaims: Conversational Information Access in the Wild(Chat)](https://arxiv.org/abs/2509.17442)**.
 The repository contains:  
 - The [**`WildClaims dataset`**](annotations/) with extracted factual claims and human annotations.  
 - The [**`data generation pipeline`**](generation/) for preprocessing, filtering, claim extraction, and check-worthiness classification.  
@@ -117,7 +117,7 @@ WildClaims is currently released under the [ODC-By 1.0](https://opendatacommons.
 
 ```
 @misc{Joko:2025:WildClaims,
-      title={WildClaims: Information Access Conversations in the Wild(Chat)}, 
+      title={WildClaims: Conversational Information Access in the Wild(Chat)}, 
       author={Hideaki Joko and Shakiba Amirshahi and Charles L. A. Clarke and Faegheh Hasibi},
       year={2025},
       eprint={2509.17442},
